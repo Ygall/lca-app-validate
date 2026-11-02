@@ -1,0 +1,831 @@
+{
+  "fiche_article": {
+    "1_type_etude": "Étude cas-témoins nationale, appariée (échantillonnage sur ensemble à risque, risk set sampling), à partir de la base médico-administrative SNDS (données de remboursement chaînées aux séjours hospitaliers). Observationnelle analytique.",
+    "2_question_recherche": "Population : femmes résidant en France ; exposition : contraceptifs oraux contenant du désogestrel 75 µg, du lévonorgestrel 30 µg ou du lévonorgestrel 50-150 µg associé à un estrogène, selon la durée d'utilisation ; comparateur : femmes non exposées au progestatif considéré, sans méningiome ; critère : méningiome intracrânien opéré.",
+    "3_criteres_de_jugement": "Principal : risque de méningiome intracrânien nécessitant une chirurgie (odds ratio, régression logistique conditionnelle). Secondaires : caractéristiques des cas (âge, gravité, localisation) et nombre nécessaire pour nuire. Critère binaire, défini par codes CIM-10 (D32, D42, C70) en diagnostic principal d'un séjour avec chirurgie.",
+    "4_schema": "Cas : femmes opérées d'un méningiome intracrânien du 1er janvier 2020 au 31 décembre 2023 ; date index = début du séjour. Témoins : 10 par cas, appariés sur l'année de naissance et le département, tirés dans la population générale (un témoin peut devenir cas). Exclusion : grossesse dans les 3 ans précédant la date index, séjour pour méningiome en 2018-2019. Au moins un remboursement les années précédentes pour cas et témoins. France entière, population nationale.",
+    "5_effectifs": "92 301 femmes : 8 391 cas et 83 910 témoins. Pas de calcul du nombre de sujets nécessaire (inclusion exhaustive de la base nationale).",
+    "6_methodes_statistiques": "Régression logistique conditionnelle (odds ratios, IC à 95 %), ajustement principal sur 6 progestatifs à risque connu ; ajustement sur obésité et endométriose en analyse supplémentaire ; stratification sur l'âge, la localisation et la gravité ; contrôles positif (neurofibromatose de type 2) et négatif (stérilet au cuivre) ; fraction attribuable approximée par p(1-1/OR) ; nombre nécessaire pour nuire ; pas de correction de multiplicité (justifiée par une hypothèse a priori) ; test bilatéral au seuil 0,05 ; pas de score de propension ; données manquantes : indice de défavorisation sociale manquant pour environ 3,8 % (non traité).",
+    "7_resultats_principaux": "Désogestrel 75 µg : usage actuel OR 1,25 (1,10-1,42) ; courte durée 1,02 (0,77-1,34) ; usage prolongé 1,32 (1,14-1,53) ; ≥5 ans 1,70 (1,39-2,08) ; ≥7 ans 2,09 (1,51-2,90) ; après usage de progestatif à risque 3,30 (2,64-4,11). Lévonorgestrel 30 µg 1,44 (0,87-2,40) ; lévonorgestrel + estrogène 0,92 (0,77-1,09). Fraction attribuable 0,7 %. Nombre nécessaire pour nuire 67 287 (tous usages) et 17 331 (>5 ans). Contrôle positif 18,75 (10,22-34,39) ; contrôle négatif 1,15 (1,00-1,31).",
+    "8_discussion": "Principaux résultats : risque faible associé au désogestrel après plus de 5 ans d'usage continu, pas de risque avec le lévonorgestrel. Interprétation : arguments de causalité (dose-réponse, localisation à la base du crâne, méningiomes multiples, régression à l'arrêt), comparaison aux autres progestatifs (cyprotérone, etc.), implications cliniques (surveillance, éviction après 45 ans), perspectives (autres pays, doses cumulées).",
+    "9_financement_conflits_enregistrement": "Non présents dans le texte intégral récupéré (déclarations non extraites) ; aucune question n'y est consacrée. Information de patients et d'associations de patients rapportée (Patient and public involvement). Pas d'enregistrement de protocole mentionné.",
+    "10_biais_declares_ou_non": "Sélection : déclaré évité (inclusion exhaustive) ; condition de remboursement appliquée aux cas et aux témoins. Classement : déclaré (médicaments non remboursés, biais vers l'hypothèse nulle ; chirurgie comme événement spécifique) ; erreurs de mesure de l'exposition (délivrance versus prise). Confusion : déclarée minimisée (ajustement, restriction sur la grossesse, contrôles positif/négatif) ; irradiation cérébrale non mesurée ; indication de prescription non connue (endométriose).",
+    "11_limites_declarees": "Médicaments non remboursés absents, absence d'indication, facteurs de confusion non mesurés (irradiation, origine ethnique), erreurs possibles de mesure de l'exposition, pas de correction de multiplicité, manque de puissance pour le lévonorgestrel seul, désogestrel combiné non étudié.",
+    "12_limites_non_declarees_reperables": "Conclusion « absence de risque » pour le lévonorgestrel seul alors que l'IC est large (0,87-2,40) et la puissance déclarée insuffisante ; contrôle négatif dont la borne inférieure de l'IC est 1,00 ; fraction attribuable et nombre nécessaire pour nuire dépendants d'hypothèses sur le caractère causal de l'association ; absence de score de propension ou de méthode d'ajustement sur les autres covariables mesurées dans l'analyse principale ; odds ratio interprété comme rapport de taux d'incidence grâce à l'échantillonnage sur ensemble à risque."
+  },
+  "sujet": {
+    "referentiel_notions": {
+      "projet": "Boussole LCA",
+      "version": "2026.0",
+      "commit": "10a1b22",
+      "date_version": "19 octobre 2026"
+    },
+    "identifiant": "roland-2025-desogestrel-levonorgestrel-meningiome",
+    "date_generation": "2026-11-02",
+    "source": {
+      "titre": "Oral contraceptives with progestogens desogestrel or levonorgestrel and risk of intracranial meningioma: national case-control study",
+      "premier_auteur": "Roland N",
+      "revue": "BMJ",
+      "annee": 2025,
+      "pmid": "40500141",
+      "doi": "10.1136/bmj-2024-083981",
+      "langue": "en",
+      "acces_texte_integral": true
+    },
+    "type_etude": "cas_temoins",
+    "parametres": {
+      "difficulte_cible": 7,
+      "nombre_questions": 14,
+      "objectifs_pedagogiques": ["biais de confusion", "score de propension", "cas-témoins"],
+      "notions_ciblees": [
+        { "id": "facteur-de-confusion", "numero": "049" },
+        { "id": "score-de-propension", "numero": "095" },
+        { "id": "etude-cas-temoins", "numero": "011" }
+      ]
+    }
+  },
+  "questions": [
+    {
+      "numero": 1,
+      "type": "QRM",
+      "enonce": "1) Concernant le rationnel de l'étude et l'état des connaissances sur les progestatifs, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Rationnel et état des connaissances",
+      "difficulte": 5,
+      "section_article": "introduction",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "le désogestrel dérive de la 17-hydroxyprogestérone comme les progestatifs déjà associés à un risque de méningiome",
+          "correcte": false,
+          "justification": "« Desogestrel and levonorgestrel are synthetic progestogens used as oral contraceptives for women and derived from testosterone, unlike other progestogens already known to be associated with a risk of meningioma […] » (Introduction). Le désogestrel dérive de la testostérone, contrairement aux progestatifs déjà associés au méningiome, qui dérivent de la 17-hydroxyprogestérone et de la 19-norprogestérone.",
+          "erreur_visee": "attribution au désogestrel de l'origine chimique des progestatifs déjà associés au risque"
+        },
+        {
+          "lettre": "B",
+          "texte": "les études antérieures ne rapportaient pas l'usage des contraceptifs oraux selon le type de progestatif",
+          "correcte": true,
+          "justification": "« Studies, however, lack information on oral contraceptive use by subtype of progestogen. » (Introduction). Cette lacune de l'état des connaissances (003) fait partie du rationnel de l'étude.",
+          "notions": [{ "id": "rationnel-et-etat-des-connaissances", "numero": "003", "role": "evaluee" }]
+        },
+        {
+          "lettre": "C",
+          "texte": "les méta-analyses antérieures avaient mis en évidence un risque de méningiome avec les contraceptifs oraux",
+          "correcte": false,
+          "justification": "« Overall, observational studies and meta-analyses (2013 and 2021) have not shown a particular risk of meningioma associated with use of oral contraceptives. » (Introduction). Les travaux antérieurs ne montraient pas de risque particulier, ce qui contribue à l'état des connaissances (003) justifiant l'étude.",
+          "notions": [{ "id": "rationnel-et-etat-des-connaissances", "numero": "003", "role": "evaluee" }],
+          "erreur_visee": "inversion du sens des résultats de la littérature antérieure"
+        },
+        {
+          "lettre": "D",
+          "texte": "le risque de méningiome n'avait pas été mesuré pour un usage continu, actuel et prolongé des progestatifs",
+          "correcte": true,
+          "justification": "« In addition, risk has not been measured for continuous, current, and long term use of progestogens. » (Introduction). Cette absence de mesure du risque pour un usage prolongé constitue un élément du rationnel de l'étude (003).",
+          "notions": [{ "id": "rationnel-et-etat-des-connaissances", "numero": "003", "role": "evaluee" }]
+        },
+        {
+          "lettre": "E",
+          "texte": "le désogestrel n'est pas commercialisé aux États-Unis en pilule progestative seule",
+          "correcte": true,
+          "justification": "« In the US and Canada, desogestrel is not marketed as a progestogen only pill, but it is available as a combined oral contraceptive. » (Introduction). Aux États-Unis, le désogestrel n'existe qu'en association à un estrogène."
+        }
+      ],
+      "nb_propositions_correctes": 3
+    },
+    {
+      "numero": 2,
+      "type": "QRM",
+      "enonce": "2) Concernant les objectifs de l'étude, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Objectif principal et secondaires, événement étudié",
+      "difficulte": 5,
+      "section_article": "introduction",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "l'objectif principal est d'évaluer le risque de méningiome intracrânien associé à des contraceptifs oraux contenant du désogestrel ou du lévonorgestrel",
+          "correcte": true,
+          "justification": "« We assessed the real life risk of intracranial meningioma associated with use of oral contraceptives containing desogestrel or levonorgestrel (alone or combined). » (Introduction). Il s'agit de l'objectif principal (005), qui précède la mention des objectifs secondaires et définit l'exposition étudiée (004).",
+          "notions": [
+            { "id": "objectif-principal-et-secondaires", "numero": "005", "role": "evaluee" },
+            { "id": "question-de-recherche-pico", "numero": "004", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "B",
+          "texte": "l'estimation du nombre nécessaire pour nuire constitue l'objectif principal de l'étude",
+          "correcte": false,
+          "justification": "« Our secondary objectives were to describe the characteristics of those women who required surgery for intracranial meningioma […] and to estimate the number needed to harm (NNH) for one intracranial meningioma requiring surgery » (Introduction). Le nombre nécessaire pour nuire est un objectif secondaire (005).",
+          "notions": [{ "id": "objectif-principal-et-secondaires", "numero": "005", "role": "evaluee" }],
+          "erreur_visee": "confusion entre objectif principal et objectif secondaire"
+        },
+        {
+          "lettre": "C",
+          "texte": "décrire l'âge, la gravité et la localisation des méningiomes des femmes opérées est un objectif secondaire",
+          "correcte": true,
+          "justification": "« Our secondary objectives were to describe the characteristics of those women who required surgery for intracranial meningioma […] and to estimate the number needed to harm (NNH) for one intracranial meningioma requiring surgery » (Introduction). La description des caractéristiques des cas fait partie des objectifs secondaires (005).",
+          "notions": [{ "id": "objectif-principal-et-secondaires", "numero": "005", "role": "evaluee" }]
+        },
+        {
+          "lettre": "D",
+          "texte": "l'étude évalue aussi le risque associé au désogestrel combiné à un estrogène",
+          "correcte": false,
+          "justification": "« Ideally, we should also have studied desogestrel combined with an oestrogen, but information was not available in SNDS (and this drug combination is little used in France). » (Discussion, Strengths and limitations of this study). Cette exposition n'a pas pu être étudiée faute de données, elle ne fait donc pas partie de l'exposition définie (004).",
+          "notions": [{ "id": "question-de-recherche-pico", "numero": "004", "role": "evaluee" }],
+          "erreur_visee": "attribution à l'étude d'une exposition non analysée"
+        },
+        {
+          "lettre": "E",
+          "texte": "l'événement étudié inclut tous les méningiomes intracrâniens, opérés ou non",
+          "correcte": false,
+          "justification": "« In this study, as in previous studies of other progestogens, only hospital admission for meningioma surgery was used as the event of interest. » (Discussion, Strengths and limitations of this study). L'événement est le méningiome opéré, ce qui précise le critère de jugement de la question de recherche (004).",
+          "notions": [{ "id": "question-de-recherche-pico", "numero": "004", "role": "evaluee" }],
+          "erreur_visee": "généralisation de l'événement étudié au-delà de sa définition"
+        }
+      ],
+      "nb_propositions_correctes": 2
+    },
+    {
+      "numero": 3,
+      "type": "QRU",
+      "enonce": "3) Concernant le choix du schéma cas-témoins pour cette étude, quelle est la proposition exacte ?",
+      "notion": "Étude cas-témoins : justification du schéma et mesure estimable",
+      "objectif_pedagogique": "cas-témoins",
+      "difficulte": 6,
+      "section_article": "methodes",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "le schéma cas-témoins permet d'estimer directement l'incidence du méningiome chez les utilisatrices de désogestrel",
+          "correcte": false,
+          "justification": "« Using incidences of meningioma (see supplementary file, supplement 12), we also estimated absolute risks of meningioma associated with desogestrel use […] » (Results, Additional analyses). Les risques absolus ont nécessité des incidences issues d'une autre source : un schéma cas-témoins ne permet pas d'estimer l'incidence (070).",
+          "notions": [{ "id": "impossibilite-d-estimer-incidence-et-prevalence", "numero": "070", "role": "evaluee" }],
+          "erreur_visee": "estimation directe d'une incidence dans une étude cas-témoins"
+        },
+        {
+          "lettre": "B",
+          "texte": "la mesure d'association estimable dans ce schéma est le risque relatif",
+          "correcte": false,
+          "justification": "« Logistic regression models conditioned on matched pairs were used to estimate odds ratios and the corresponding 95% confidence intervals (CIs) […] » (Methods, Statistical analysis). Dans une étude cas-témoins, la mesure estimable est le rapport de cotes (071, 036), pas le risque relatif.",
+          "notions": [
+            { "id": "rapport-de-cotes-seule-mesure-estimable", "numero": "071", "role": "evaluee" },
+            { "id": "rapport-de-cotes", "numero": "036", "role": "associee" }
+          ],
+          "erreur_visee": "confusion entre rapport de cotes et risque relatif"
+        },
+        {
+          "lettre": "C",
+          "texte": "le schéma cas-témoins a été choisi parce que le remboursement du désogestrel a débuté en 2009",
+          "correcte": false,
+          "justification": "« Given the analysis of multiple drug use in our study and the left censored characteristics of the data (desogestrel reimbursement starting in 2014), in line with our previous studies, we opted for a case-control rather than a cohort study design. » (Methods, Study design and data source). Le remboursement a débuté en 2014, et non en 2009 ; cette date explique la troncature à gauche des données qui motive le choix du schéma cas-témoins (011).",
+          "notions": [{ "id": "etude-cas-temoins", "numero": "011", "role": "associee" }],
+          "erreur_visee": "valeur erronée d'une donnée justifiant le schéma"
+        },
+        {
+          "lettre": "D",
+          "texte": "le schéma cas-témoins permet d'inclure des utilisatrices de longue durée des progestatifs étudiés",
+          "correcte": true,
+          "justification": "« This design ensured the inclusion of long term users of the progestogens of interest. » (Methods, Study design and data source). Le choix d'un schéma cas-témoins (011) s'appuie sur des données de remboursement issues d'une base médico-administrative (103).",
+          "notions": [
+            { "id": "etude-cas-temoins", "numero": "011", "role": "evaluee" },
+            { "id": "bases-medico-administratives-registres", "numero": "103", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "E",
+          "texte": "une étude de cohorte était impossible car la base de données ne contient pas les remboursements de médicaments",
+          "correcte": false,
+          "justification": "« The SNDS database contains information on all health related reimbursements for more than 99% of people residing in France and is linked to the central national French hospital discharge database. » (Methods, Study design and data source). La base contient les remboursements ; le choix du schéma tient à la troncature à gauche des données (103).",
+          "notions": [{ "id": "bases-medico-administratives-registres", "numero": "103", "role": "evaluee" }],
+          "erreur_visee": "justification du schéma par une caractéristique erronée de la base"
+        }
+      ],
+      "nb_propositions_correctes": 1
+    },
+    {
+      "numero": 4,
+      "type": "QRM",
+      "enonce": "4) Concernant la définition des cas et les critères d'exclusion, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Définition des cas, exclusions et facteur de confusion",
+      "objectif_pedagogique": "biais de confusion",
+      "difficulte": 5,
+      "section_article": "methodes",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "les femmes hospitalisées pour un méningiome en 2018-2019 ont été incluses pour étudier les récidives",
+          "correcte": false,
+          "justification": "« To avoid recurrent meningiomas, we also excluded women with a history of hospital admission for meningioma during 2018-19. » (Methods, Definition of cases and selection of controls). Ces femmes ont été exclues, et non incluses, pour éviter les récidives (017).",
+          "notions": [{ "id": "criteres-d-inclusion-et-de-non-inclusion", "numero": "017", "role": "evaluee" }],
+          "erreur_visee": "inversion d'un critère de non-inclusion"
+        },
+        {
+          "lettre": "B",
+          "texte": "les cas sont les femmes opérées d'un méningiome intracrânien entre 2020 et 2023",
+          "correcte": true,
+          "justification": "« We considered women of all ages to be eligible for participation in this study if they resided in France and had undergone surgery for intracranial meningioma between 1 January 2020 and 31 December 2023. » (Methods, Definition of cases and selection of controls). Cette définition précise la source et la période de recrutement des cas (065).",
+          "notions": [{ "id": "definition-et-source-des-cas", "numero": "065", "role": "evaluee" }]
+        },
+        {
+          "lettre": "C",
+          "texte": "les femmes enceintes dans les trois ans précédant la date index ont été exclues, car la grossesse influence à la fois l'usage du progestatif et le risque",
+          "correcte": true,
+          "justification": "« to improve the reliability of risk estimates and since pregnancy influences both drug use and risk, we excluded women who were pregnant in the three years before the index date » (Discussion, Strengths and limitations of this study). Un facteur lié à la fois à l'exposition et à l'événement est un facteur de confusion potentiel (049), ici traité par exclusion (017).",
+          "notions": [
+            { "id": "facteur-de-confusion", "numero": "049", "role": "evaluee" },
+            { "id": "criteres-d-inclusion-et-de-non-inclusion", "numero": "017", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "D",
+          "texte": "les cas sont identifiés par un code de méningiome en diagnostic associé du séjour hospitalier",
+          "correcte": false,
+          "justification": "« Surgery for intracranial meningioma was defined by a meningeal tumour with ICD-10 codes D32, D42, or C70 as the main diagnosis of the hospital admission for surgery (see supplementary file, supplement 1) during the same hospital stay. » (Methods, Definition of cases and selection of controls). Le code doit figurer en diagnostic principal, ce qui précise la définition des cas (065).",
+          "notions": [{ "id": "definition-et-source-des-cas", "numero": "065", "role": "evaluee" }],
+          "erreur_visee": "confusion entre diagnostic principal et diagnostic associé"
+        },
+        {
+          "lettre": "E",
+          "texte": "pour chaque cas, la date index correspond à la date de début du séjour hospitalier de la chirurgie",
+          "correcte": true,
+          "justification": "« For each case, we considered the start date of the corresponding hospital admission as the index date. » (Methods, Definition of cases and selection of controls)."
+        }
+      ],
+      "nb_propositions_correctes": 3
+    },
+    {
+      "numero": 5,
+      "type": "QRM",
+      "enonce": "5) Concernant le choix et l'appariement des témoins, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Choix des témoins, appariement, échantillonnage sur ensemble à risque",
+      "objectif_pedagogique": "cas-témoins",
+      "difficulte": 7,
+      "section_article": "methodes",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "les témoins ont été appariés aux cas sur le niveau de défavorisation sociale",
+          "correcte": false,
+          "justification": "« We matched each woman requiring surgery for intracranial meningioma (cases) with 10 women without intracranial meningioma (controls) for year of birth and French geographical area (département) of residence (n=101). » (Methods, Definition of cases and selection of controls). L'appariement porte sur l'année de naissance et le département, non sur la défavorisation sociale (067).",
+          "notions": [{ "id": "appariement-principe-et-facteurs", "numero": "067", "role": "evaluee" }],
+          "erreur_visee": "ajout d'un critère d'appariement non utilisé"
+        },
+        {
+          "lettre": "B",
+          "texte": "dix témoins ont été appariés à chaque cas",
+          "correcte": true,
+          "justification": "« We matched each woman requiring surgery for intracranial meningioma (cases) with 10 women without intracranial meningioma (controls) for year of birth and French geographical area (département) of residence (n=101). » (Methods, Definition of cases and selection of controls). Le choix de plusieurs témoins par cas relève du choix et de l'appariement des témoins (066, 067).",
+          "notions": [
+            { "id": "choix-et-source-des-temoins", "numero": "066", "role": "evaluee" },
+            { "id": "appariement-principe-et-facteurs", "numero": "067", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "C",
+          "texte": "les témoins sont des femmes hospitalisées pour une autre pathologie",
+          "correcte": false,
+          "justification": "« Secondly, we used a case-control design, with time accounted for in both the drawing of controls from the general population, which is dynamic (risk set sampling), and the analysis, enabling odds ratios to be interpreted as incidence rate ratios. » (Discussion, Strengths and limitations of this study). Les témoins sont tirés de la population générale, ce qui évite le biais de sélection des témoins hospitaliers (Berkson) (066, 101).",
+          "notions": [
+            { "id": "choix-et-source-des-temoins", "numero": "066", "role": "evaluee" },
+            { "id": "biais-de-selection-des-temoins-berkson", "numero": "101", "role": "associee" }
+          ],
+          "erreur_visee": "attribution aux témoins d'une origine hospitalière"
+        },
+        {
+          "lettre": "D",
+          "texte": "une femme tirée au sort comme témoin peut devenir un cas ultérieurement",
+          "correcte": true,
+          "justification": "« Matching was based on the risk set sampling approach—that is, controls could become cases in the future. » (Methods, Definition of cases and selection of controls). L'échantillonnage sur ensemble à risque est un mode de choix des témoins (066).",
+          "notions": [{ "id": "choix-et-source-des-temoins", "numero": "066", "role": "evaluee" }]
+        },
+        {
+          "lettre": "E",
+          "texte": "l'effet de l'âge sur le risque de méningiome peut être estimé dans le modèle puisque l'âge est un critère d'appariement",
+          "correcte": false,
+          "justification": "Sans objet. Une variable d'appariement (067) ne peut pas voir son effet estimé dans une analyse appariée par régression logistique conditionnelle (097), car les cas et leurs témoins sont comparables sur ce facteur par construction.",
+          "notions": [
+            { "id": "appariement-principe-et-facteurs", "numero": "067", "role": "evaluee" },
+            { "id": "analyse-appariee-regression-logistique-conditionnelle", "numero": "097", "role": "associee" }
+          ],
+          "erreur_visee": "estimation de l'effet d'une variable d'appariement"
+        }
+      ],
+      "nb_propositions_correctes": 2
+    },
+    {
+      "numero": 6,
+      "type": "QRM",
+      "enonce": "6) Concernant la définition de l'exposition aux progestatifs, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Définition de l'exposition et antériorité",
+      "difficulte": 5,
+      "section_article": "methodes",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "l'usage est défini par au moins une délivrance du progestatif dans les 365 jours précédant la date index",
+          "correcte": true,
+          "justification": "« Oral progestogen use was defined as at least one dispensation of the progestogen of interest in the 365 days before the index date. » (Methods, Definition of drug use). La définition de l'exposition (059) est ancrée avant la date index (061).",
+          "notions": [
+            { "id": "definition-des-groupes-et-de-l-exposition", "numero": "059", "role": "evaluee" },
+            { "id": "anteriorite-de-l-exposition-sur-l-evenement", "numero": "061", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "B",
+          "texte": "l'usage de courte durée correspond à un usage dans l'année avant la date index sans délivrance la deuxième année",
+          "correcte": true,
+          "justification": "« Short term use was defined as use within the past year before the index date, without dispensing in the second year before the index date. » (Methods, Definition of drug use). Il s'agit d'une définition de l'exposition (059).",
+          "notions": [{ "id": "definition-des-groupes-et-de-l-exposition", "numero": "059", "role": "evaluee" }]
+        },
+        {
+          "lettre": "C",
+          "texte": "l'exposition est recueillie par un questionnaire auto-déclaré, exposant à un biais de mémorisation",
+          "correcte": false,
+          "justification": "« The use of SNDS, with virtually comprehensive data on drug reimbursements since 2006, helped to avoid recall bias. » (Discussion, Strengths and limitations of this study). L'exposition est issue des remboursements enregistrés (068), ce qui limite le biais de mémorisation (069).",
+          "notions": [
+            { "id": "recueil-retrospectif-de-l-exposition", "numero": "068", "role": "evaluee" },
+            { "id": "biais-de-memorisation", "numero": "069", "role": "associee" }
+          ],
+          "erreur_visee": "attribution d'un recueil déclaratif de l'exposition"
+        },
+        {
+          "lettre": "D",
+          "texte": "l'usage prolongé correspond à un usage récent et continu les années précédentes",
+          "correcte": true,
+          "justification": "« Prolonged use was defined as recent use (dispensed at least once within the first year before the index date) and continuous use in the previous years […] » (Methods, Definition of drug use). Il s'agit d'une définition de l'exposition (059).",
+          "notions": [{ "id": "definition-des-groupes-et-de-l-exposition", "numero": "059", "role": "evaluee" }]
+        },
+        {
+          "lettre": "E",
+          "texte": "les pilules d'urgence au lévonorgestrel ont été exclues car leur usage est occasionnel",
+          "correcte": true,
+          "justification": "« Emergency pills containing levonorgestrel were also excluded because they are used on an occasional basis. » (Methods, Definition of drug use). Cette exclusion délimite l'exposition étudiée (059).",
+          "notions": [{ "id": "definition-des-groupes-et-de-l-exposition", "numero": "059", "role": "evaluee" }]
+        }
+      ],
+      "nb_propositions_correctes": 4
+    },
+    {
+      "numero": 7,
+      "type": "QRU",
+      "enonce": "7) Concernant l'analyse statistique principale, quelle est la proposition exacte ?",
+      "notion": "Ajustement, régression logistique conditionnelle, score de propension",
+      "objectif_pedagogique": "score de propension",
+      "difficulte": 7,
+      "section_article": "methodes",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "l'analyse principale repose sur un score de propension d'être exposée au désogestrel",
+          "correcte": false,
+          "justification": "« Logistic regression models conditioned on matched pairs were used to estimate odds ratios and the corresponding 95% confidence intervals (CIs) […] and intracranial meningioma with adjustment for the six progestogens associated with increased risk (main analysis). » (Methods, Statistical analysis). L'analyse principale est un ajustement dans un modèle de régression (093) ; aucun score de propension (095) n'est utilisé.",
+          "notions": [
+            { "id": "score-de-propension", "numero": "095", "role": "evaluee" },
+            { "id": "ajustement", "numero": "093", "role": "associee" }
+          ],
+          "erreur_visee": "attribution d'une méthode d'ajustement non utilisée"
+        },
+        {
+          "lettre": "B",
+          "texte": "l'ajustement sur l'obésité et l'endométriose constitue l'analyse principale",
+          "correcte": false,
+          "justification": "« Obesity and endometriosis were fully adjusted for in analyses (see supplementary analysis). » (Methods, Statistical analysis). L'ajustement sur ces deux facteurs de confusion potentiels (049) relève d'une analyse supplémentaire, l'analyse principale ajustant sur six progestatifs (093).",
+          "notions": [
+            { "id": "ajustement", "numero": "093", "role": "evaluee" },
+            { "id": "facteur-de-confusion", "numero": "049", "role": "associee" }
+          ],
+          "erreur_visee": "confusion entre analyse principale et analyse supplémentaire"
+        },
+        {
+          "lettre": "C",
+          "texte": "la régression logistique conditionnelle estime des odds ratios ajustés sur six progestatifs associés à un risque connu",
+          "correcte": true,
+          "justification": "« Logistic regression models conditioned on matched pairs were used to estimate odds ratios and the corresponding 95% confidence intervals (CIs) […] » (Methods, Statistical analysis). Une analyse appariée utilise une régression logistique conditionnelle (097) et fournit des rapports de cotes (036) ajustés (093).",
+          "notions": [
+            { "id": "analyse-appariee-regression-logistique-conditionnelle", "numero": "097", "role": "evaluee" },
+            { "id": "rapport-de-cotes", "numero": "036", "role": "associee" },
+            { "id": "ajustement", "numero": "093", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "D",
+          "texte": "le seuil de signification est un seuil unilatéral de 0,05",
+          "correcte": false,
+          "justification": "« A P value <0.05 was considered statistically significant (two tailed tests). » (Methods, Statistical analysis). Les tests sont bilatéraux (037).",
+          "notions": [{ "id": "hypotheses-h0-et-h1-valeur-de-p", "numero": "037", "role": "evaluee" }],
+          "erreur_visee": "confusion entre test bilatéral et unilatéral"
+        },
+        {
+          "lettre": "E",
+          "texte": "une correction de multiplicité a été appliquée aux analyses",
+          "correcte": false,
+          "justification": "« Fifthly, we did not perform multiple tests, as this work is based on a strong a priori hypothesis derived from our previous work. » (Discussion, Strengths and limitations of this study). Aucune correction n'a été appliquée, ce qui expose à des associations dues au hasard (125).",
+          "notions": [{ "id": "multiplicite-des-tests", "numero": "125", "role": "evaluee" }],
+          "erreur_visee": "attribution d'une correction de multiplicité non réalisée"
+        }
+      ],
+      "nb_propositions_correctes": 1
+    },
+    {
+      "numero": 8,
+      "type": "QRM",
+      "enonce": "8) Concernant la description des cas et des témoins dans le premier tableau des résultats, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Lecture du tableau 1 et variables d'appariement",
+      "objectif_pedagogique": "biais de confusion",
+      "difficulte": 6,
+      "section_article": "resultats",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "l'âge moyen est identique chez les cas et chez les témoins, en raison de l'appariement",
+          "correcte": true,
+          "justification": "« The mean age of the women was 59.7 years (standard deviation 12.9 years) » (Results, Description of cases and controls). Le tableau 1 donne 59,7 (12,9) dans les deux groupes : l'identité est liée à l'appariement sur l'année de naissance (067) et non à une comparabilité spontanée (029).",
+          "notions": [
+            { "id": "appariement-principe-et-facteurs", "numero": "067", "role": "evaluee" },
+            { "id": "lecture-du-tableau-1", "numero": "029", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "B",
+          "texte": "l'endométriose est moins fréquente chez les cas que chez les témoins",
+          "correcte": false,
+          "justification": "« Overall, 2.7% of cases (223/8391) and 1.5% of controls (1288/83 910) had a hospital diagnosis of endometriosis. » (Results, Description of cases and controls). L'endométriose est plus fréquente chez les cas.",
+          "erreur_visee": "inversion du sens d'une différence"
+        },
+        {
+          "lettre": "C",
+          "texte": "la mortalité à deux ans est similaire chez les cas et chez les témoins",
+          "correcte": false,
+          "justification": "« Mortality was estimated at 3.4% two years after the index date in cases (138/4024 with a two year follow-up) » (Results, Description of cases and controls). Le tableau 1 donne 0,8 % chez les témoins : la mortalité est plus élevée chez les cas.",
+          "erreur_visee": "lecture erronée d'un tableau descriptif"
+        },
+        {
+          "lettre": "D",
+          "texte": "l'obésité est plus fréquente chez les cas que chez les témoins",
+          "correcte": true,
+          "justification": "« Obesity was found in 7.0% of cases (587/8391) and 4.6% of controls (3898/83 910). » (Results, Description of cases and controls). L'obésité, facteur de risque de méningiome, est plus fréquente chez les cas."
+        },
+        {
+          "lettre": "E",
+          "texte": "la distribution des variables sociales est similaire entre cas et témoins",
+          "correcte": true,
+          "justification": "« The distribution of social and pregnancy related variables was similar between cases and controls. » (Results, Description of cases and controls). La lecture du tableau 1 (029) montre une comparabilité sur ces variables.",
+          "notions": [{ "id": "lecture-du-tableau-1", "numero": "029", "role": "evaluee" }]
+        }
+      ],
+      "nb_propositions_correctes": 3
+    },
+    {
+      "numero": 9,
+      "type": "QRM",
+      "enonce": "9) Concernant le risque de méningiome associé au désogestrel selon la durée d'utilisation, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Lecture d'un rapport de cotes et de son intervalle de confiance",
+      "difficulte": 7,
+      "section_article": "resultats",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "le rapport de cotes est significatif pour la tranche d'usage continu de cinq à six ans",
+          "correcte": false,
+          "justification": "« 1.22 (0.85 to 1.76) » (Table 2, desogestrel 75 µg, previous continuous use 5-6 years). L'intervalle de confiance (039) inclut 1 : le rapport de cotes (036) de cette tranche n'est pas significatif.",
+          "notions": [
+            { "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "evaluee" },
+            { "id": "rapport-de-cotes", "numero": "036", "role": "associee" }
+          ],
+          "erreur_visee": "lecture erronée d'un intervalle de confiance incluant 1"
+        },
+        {
+          "lettre": "B",
+          "texte": "l'intervalle de confiance du rapport de cotes de l'usage de courte durée inclut la valeur 1",
+          "correcte": true,
+          "justification": "« Analyses for short term and prolonged use of desogestrel showed a risk of meningioma of 1.02 (0.77 to 1.34) and 1.32 (1.14 to 1.53), respectively. » (Results, Risk of intracranial meningioma). L'intervalle 0,77 à 1,34 inclut 1 : l'association n'est pas significative (039).",
+          "notions": [{ "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "evaluee" }]
+        },
+        {
+          "lettre": "C",
+          "texte": "le rapport de cotes de 1,02 prouve l'absence de risque pour l'usage de courte durée",
+          "correcte": false,
+          "justification": "« Analyses for short term and prolonged use of desogestrel showed a risk of meningioma of 1.02 (0.77 to 1.34) and 1.32 (1.14 to 1.53), respectively. » (Results, Risk of intracranial meningioma). L'intervalle de confiance (039) reste compatible avec une augmentation du risque jusqu'à 34 % : l'absence de preuve n'est pas une preuve d'absence (138).",
+          "notions": [
+            { "id": "absence-de-preuve-et-preuve-d-absence", "numero": "138", "role": "evaluee" },
+            { "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "associee" }
+          ],
+          "erreur_visee": "interprétation d'un résultat non significatif comme preuve d'absence d'effet"
+        },
+        {
+          "lettre": "D",
+          "texte": "un an après l'arrêt du désogestrel, le risque est significativement inférieur à celui des non-utilisatrices",
+          "correcte": false,
+          "justification": "« For past use of progestogens, the excess risk of meningioma associated with use of desogestrel 75 µg in the second year before the index date but not the first year before the index date (ie, discontinuation for more than a year) disappeared (0.83 (0.63 to 1.09)) » (Results, Additional analyses). L'intervalle de confiance (039) inclut 1 : le risque n'est pas significativement différent de celui des non-utilisatrices.",
+          "notions": [{ "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "evaluee" }],
+          "erreur_visee": "lecture d'un intervalle incluant 1 comme un effet protecteur"
+        },
+        {
+          "lettre": "E",
+          "texte": "le rapport de cotes est significativement supérieur à 1 pour un usage continu de plus de cinq ans",
+          "correcte": true,
+          "justification": "« The risk was significant after five years of use, with a subsequent increase according to duration of desogestrel use: 1.70 (1.39 to 2.08) for more than five years […] » (Results, Risk of intracranial meningioma). L'intervalle de confiance (039) exclut 1 pour ce rapport de cotes (036).",
+          "notions": [
+            { "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "evaluee" },
+            { "id": "rapport-de-cotes", "numero": "036", "role": "associee" }
+          ]
+        }
+      ],
+      "nb_propositions_correctes": 2
+    },
+    {
+      "numero": 10,
+      "type": "QRM",
+      "enonce": "10) Concernant les résultats relatifs au lévonorgestrel, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Absence de preuve, puissance et sous-groupes",
+      "difficulte": 8,
+      "section_article": "resultats",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "l'usage actuel de lévonorgestrel seul n'est pas associé de façon significative à un excès de risque de méningiome",
+          "correcte": true,
+          "justification": "« Conversely, current use of levonorgestrel, alone or combined with oestrogen, was not significantly associated with an increased risk of intracranial meningioma (1.44 (0.87 to 2.40) and 0.92 (0.77 to 1.09), respectively). » (Results, Risk of intracranial meningioma). L'intervalle de confiance (039) du lévonorgestrel seul inclut 1, mais il est large.",
+          "notions": [{ "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "evaluee" }]
+        },
+        {
+          "lettre": "B",
+          "texte": "les résultats démontrent l'absence de risque de méningiome pour le lévonorgestrel seul",
+          "correcte": false,
+          "justification": "« Our results show an absence of meningioma risk in levonorgestrel users (alone or in combined form). » (Conclusions). L'intervalle de confiance du lévonorgestrel seul, 0,87 à 2,40 (039), est compatible avec un doublement du risque : un résultat non significatif ne prouve pas l'absence d'effet (138).",
+          "notions": [
+            { "id": "absence-de-preuve-et-preuve-d-absence", "numero": "138", "role": "evaluee" },
+            { "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "associee" }
+          ],
+          "erreur_visee": "interprétation d'un résultat non significatif comme preuve d'absence d'effet"
+        },
+        {
+          "lettre": "C",
+          "texte": "les auteurs déclarent un manque de puissance pour l'analyse du lévonorgestrel seul",
+          "correcte": true,
+          "justification": "« Finally, our study lacked power in the analyses on users of levonorgestrel alone owing to a lower number of women. » (Discussion, Strengths and limitations of this study). Un faible effectif réduit la puissance (043) et limite l'interprétation d'un résultat non significatif (138).",
+          "notions": [
+            { "id": "risques-alpha-et-beta-puissance", "numero": "043", "role": "evaluee" },
+            { "id": "absence-de-preuve-et-preuve-d-absence", "numero": "138", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "D",
+          "texte": "chez les femmes de plus de 45 ans, aucun risque n'est observé pour le lévonorgestrel associé à un estrogène",
+          "correcte": false,
+          "justification": "« Lastly, risk of intracranial meningioma was observed when stratifying women older than 45 years by use of levonorgestrel combined with oestrogen: 1.37 (1.06 to 1.76) for current use […] » (Results, Additional analyses). Dans ce sous-groupe (077), l'intervalle de confiance (039) exclut 1.",
+          "notions": [
+            { "id": "analyse-de-sensibilite-sous-groupes-interaction", "numero": "077", "role": "evaluee" },
+            { "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "associee" }
+          ],
+          "erreur_visee": "généralisation d'un résultat global à un sous-groupe"
+        },
+        {
+          "lettre": "E",
+          "texte": "pour le lévonorgestrel associé à un estrogène, l'usage de courte durée a un rapport de cotes significativement inférieur à 1",
+          "correcte": true,
+          "justification": "« 0.47 (0.27 to 0.81) » (Table 2, levonorgestrel + oestrogen, short term <1 year). L'intervalle de confiance (039) exclut 1 : le rapport de cotes (036) est significativement inférieur à 1.",
+          "notions": [
+            { "id": "intervalle-de-confiance-a-95", "numero": "039", "role": "evaluee" },
+            { "id": "rapport-de-cotes", "numero": "036", "role": "associee" }
+          ]
+        }
+      ],
+      "nb_propositions_correctes": 3
+    },
+    {
+      "numero": 11,
+      "type": "QRU",
+      "enonce": "11) Concernant la fraction attribuable au désogestrel, quelle est la proposition exacte ?",
+      "notion": "Fraction attribuable et nombre nécessaire pour nuire",
+      "difficulte": 8,
+      "section_article": "resultats",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "une fraction attribuable de 0,7 % signifie que 0,7 % des utilisatrices de désogestrel développent un méningiome",
+          "correcte": false,
+          "justification": "« according to our analyses, 0.7% of meningioma cases were attributable to desogestrel use » (Results, Additional analyses). La fraction attribuable (091) concerne la part des cas de méningiome attribuable à l'exposition, et non le risque chez les utilisatrices.",
+          "notions": [{ "id": "fraction-attribuable", "numero": "091", "role": "evaluee" }],
+          "erreur_visee": "confusion entre fraction attribuable et risque chez les exposées"
+        },
+        {
+          "lettre": "B",
+          "texte": "avec une prévalence d'usage de 3,4 % parmi les cas et un rapport de cotes de 1,25, la formule retrouve la fraction attribuable de 0,7 % rapportée",
+          "correcte": true,
+          "justification": "« Current use of desogestrel 75 µg was associated with an excess risk of intracranial meningioma (odds ratio 1.25 (95% CI 1.10 to 1.42)). » (Results, Risk of intracranial meningioma). Avec la formule p(1-1/OR) (091) appliquée au rapport de cotes (036), le calcul donne 0,034 × (1 − 1/1,25) = 0,034 × 0,2, soit environ 0,7 %, valeur rapportée par les auteurs.",
+          "notions": [
+            { "id": "fraction-attribuable", "numero": "091", "role": "evaluee" },
+            { "id": "rapport-de-cotes", "numero": "036", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "C",
+          "texte": "dans la formule de la fraction attribuable, p désigne la prévalence de l'usage parmi les témoins",
+          "correcte": false,
+          "justification": "« […] is the prevalence of use of the progestogen concerned among the cases » (Methods, Statistical analysis). La prévalence p est celle de l'usage parmi les cas (091).",
+          "notions": [{ "id": "fraction-attribuable", "numero": "091", "role": "evaluee" }],
+          "erreur_visee": "confusion entre prévalence de l'exposition chez les cas et chez les témoins"
+        },
+        {
+          "lettre": "D",
+          "texte": "avec un rapport de cotes égal à 1, la fraction attribuable serait égale à la prévalence de l'usage parmi les cas",
+          "correcte": false,
+          "justification": "« The population attributable fraction (PAF) was approximated from the odds ratio obtained for each progestogen. » (Methods, Statistical analysis). Avec la formule p(1-1/OR), un rapport de cotes égal à 1 donne une fraction attribuable nulle (091, 036).",
+          "notions": [
+            { "id": "fraction-attribuable", "numero": "091", "role": "evaluee" },
+            { "id": "rapport-de-cotes", "numero": "036", "role": "associee" }
+          ],
+          "erreur_visee": "erreur de calcul d'une fraction attribuable en l'absence d'association"
+        },
+        {
+          "lettre": "E",
+          "texte": "le nombre nécessaire pour nuire est plus élevé pour un usage de plus de cinq ans que pour un usage de toute durée",
+          "correcte": false,
+          "justification": "« For use of more than five years, we estimated that 17 331 users would be needed to observe one woman with meningioma requiring surgery […] » (Results, Additional analyses). Le nombre est plus faible (17 331 contre 67 287 pour tout usage) car le risque est plus élevé (035).",
+          "notions": [{ "id": "nnt-et-nnh", "numero": "035", "role": "evaluee" }],
+          "erreur_visee": "inversion du sens de variation du nombre nécessaire pour nuire"
+        }
+      ],
+      "nb_propositions_correctes": 1
+    },
+    {
+      "numero": 12,
+      "type": "QRM",
+      "enonce": "12) Concernant les arguments en faveur de la causalité et les contrôles positif et négatif, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Contrôles positif et négatif, critères de causalité",
+      "objectif_pedagogique": "biais de confusion",
+      "difficulte": 7,
+      "section_article": "discussion",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "les stérilets au cuivre ont été utilisés comme contrôle négatif",
+          "correcte": true,
+          "justification": "« An analysis of copper intrauterine devices was included as negative controls. » (Methods, Definition of drug use). Une exposition non attendue comme causale permet de vérifier l'absence d'association artéfactuelle, ce qui renforce la validité interne (050) et la maîtrise des biais, dont la confusion (049).",
+          "notions": [
+            { "id": "validite-interne-et-externe", "numero": "050", "role": "evaluee" },
+            { "id": "facteur-de-confusion", "numero": "049", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "B",
+          "texte": "la disparition du risque un an après l'arrêt du désogestrel est un argument contre la causalité",
+          "correcte": false,
+          "justification": "« The reduction in risk on discontinuation of desogestrel is further in its favour. » (Discussion, Hormone induced meningiomas). La réversibilité à l'arrêt est un argument en faveur de la causalité (105).",
+          "notions": [{ "id": "criteres-de-bradford-hill", "numero": "105", "role": "evaluee" }],
+          "erreur_visee": "inversion du sens d'un argument de causalité"
+        },
+        {
+          "lettre": "C",
+          "texte": "pour le lévonorgestrel associé à un estrogène, les critères de causalité sont réunis, notamment la relation dose-effet",
+          "correcte": false,
+          "justification": "« Furthermore, the causality criteria for meningiomas related to levonorgestrel combined with oestrogen were not met. » (Discussion, Importance of age). Les critères de causalité (105) ne sont pas réunis pour cette association.",
+          "notions": [{ "id": "criteres-de-bradford-hill", "numero": "105", "role": "evaluee" }],
+          "erreur_visee": "attribution de critères de causalité non remplis"
+        },
+        {
+          "lettre": "D",
+          "texte": "la neurofibromatose de type 2, facteur de risque connu de méningiome, a été utilisée comme contrôle positif",
+          "correcte": true,
+          "justification": "« To validate our results, the risk associated with a history of neurofibromatosis type 2, a known risk factor for meningioma, was assessed as positive controls for the progestogens of interest. » (Methods, Statistical analysis). Un contrôle positif est une exposition dont l'association est connue, ce qui sert à vérifier que l'étude détecte une association réelle (050).",
+          "notions": [{ "id": "validite-interne-et-externe", "numero": "050", "role": "evaluee" }]
+        },
+        {
+          "lettre": "E",
+          "texte": "un contrôle négatif est une exposition connue pour augmenter le risque de l'événement, utilisée pour valider la capacité de l'étude à détecter une association",
+          "correcte": false,
+          "justification": "Sans objet. Cette définition correspond à celle d'un contrôle positif ; un contrôle négatif est une exposition sans lien attendu avec l'événement, qui permet de repérer un biais ou une confusion résiduelle (050, 049).",
+          "notions": [
+            { "id": "validite-interne-et-externe", "numero": "050", "role": "evaluee" },
+            { "id": "facteur-de-confusion", "numero": "049", "role": "associee" }
+          ],
+          "erreur_visee": "confusion entre contrôle positif et contrôle négatif"
+        }
+      ],
+      "nb_propositions_correctes": 2
+    },
+    {
+      "numero": 13,
+      "type": "QRM",
+      "enonce": "13) Concernant les limites méthodologiques de l'étude liées aux biais, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+      "notion": "Biais de confusion, de classement, d'indication et score de propension",
+      "objectif_pedagogique": "score de propension",
+      "difficulte": 8,
+      "section_article": "discussion",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "les auteurs reconnaissent ne pas avoir pu prendre en compte l'irradiation cérébrale antérieure, facteur de risque de méningiome",
+          "correcte": true,
+          "justification": "« Our data did not provide information on previous exposure to intracerebral radiation, and we were therefore unable to take this factor into account in our study […] » (Discussion, Strengths and limitations of this study). Un facteur de risque non mesuré est une source de confusion résiduelle (049), déclarée dans les limites (078).",
+          "notions": [
+            { "id": "facteur-de-confusion", "numero": "049", "role": "evaluee" },
+            { "id": "limites-declarees", "numero": "078", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "B",
+          "texte": "la condition d'au moins un remboursement les années précédentes n'a été imposée qu'aux témoins",
+          "correcte": false,
+          "justification": "« The same condition applied to cases. » (Methods, Definition of cases and selection of controls). La condition s'applique aux cas comme aux témoins, ce qui évite un biais de sélection différentiel (046).",
+          "notions": [{ "id": "biais-de-selection", "numero": "046", "role": "evaluee" }],
+          "erreur_visee": "attribution d'un critère de sélection différentiel"
+        },
+        {
+          "lettre": "C",
+          "texte": "la non-détection des médicaments non remboursés peut biaiser les associations vers l'hypothèse nulle",
+          "correcte": true,
+          "justification": "« This incomplete detection of drug use might bias the associations towards the null. » (Discussion, Strengths and limitations of this study). Une mauvaise classification de l'exposition indépendante du statut cas ou témoin est non différentielle et atténue l'association (048).",
+          "notions": [{ "id": "biais-de-classement-differentiel-ou-non", "numero": "048", "role": "evaluee" }]
+        },
+        {
+          "lettre": "D",
+          "texte": "un score de propension construit à partir des variables mesurées ne corrigerait pas la confusion due à l'irradiation cérébrale non mesurée",
+          "correcte": true,
+          "justification": "« Our data did not provide information on previous exposure to intracerebral radiation » (Discussion, Strengths and limitations of this study). Un score de propension (095) résume des covariables mesurées : il ne corrige pas un facteur de confusion non mesuré (049).",
+          "notions": [
+            { "id": "score-de-propension", "numero": "095", "role": "evaluee" },
+            { "id": "facteur-de-confusion", "numero": "049", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "E",
+          "texte": "l'absence d'information sur l'indication de prescription expose à un biais d'indication",
+          "correcte": true,
+          "justification": "« Secondly, SNDS does not provide information on clinics and indications for which desogestrel and levonorgestrel have been prescribed. » (Discussion, Strengths and limitations of this study). Une indication liée à la fois à la prescription et à l'événement, ici l'endométriose, peut fausser l'association (094).",
+          "notions": [{ "id": "biais-d-indication", "numero": "094", "role": "evaluee" }]
+        }
+      ],
+      "nb_propositions_correctes": 4
+    },
+    {
+      "numero": 14,
+      "type": "QRU",
+      "enonce": "14) Concernant la conclusion des auteurs et ses implications, quelle est la proposition exacte ?",
+      "notion": "Cohérence de la conclusion, applicabilité et perspectives",
+      "difficulte": 7,
+      "section_article": "discussion",
+      "propositions": [
+        {
+          "lettre": "A",
+          "texte": "la surveillance du méningiome doit se concentrer sur les femmes ayant utilisé le désogestrel plus de cinq ans de façon continue",
+          "correcte": true,
+          "justification": "« Monitoring for meningioma should focus on women who have used desogestrel 75 µg for more than five continuous years, in whom we found a small risk of meningioma. » (Conclusions). La conclusion est cohérente avec le risque observé pour cette durée (081) et oriente la pratique (079).",
+          "notions": [
+            { "id": "conclusion-coherente-avec-les-resultats", "numero": "081", "role": "evaluee" },
+            { "id": "applicabilite-a-la-pratique", "numero": "079", "role": "associee" }
+          ]
+        },
+        {
+          "lettre": "B",
+          "texte": "les résultats sont extrapolables sans réserve à l'implant contraceptif à l'étonogestrel",
+          "correcte": false,
+          "justification": "« Caution is therefore needed when extrapolating possible risks to these contraceptives. » (Discussion, Strengths and limitations of this study). Les résultats concernent une population et des produits donnés : l'extrapolation exige de la prudence (050, 079).",
+          "notions": [
+            { "id": "validite-interne-et-externe", "numero": "050", "role": "evaluee" },
+            { "id": "applicabilite-a-la-pratique", "numero": "079", "role": "associee" }
+          ],
+          "erreur_visee": "extrapolation hors du produit et de la population étudiés"
+        },
+        {
+          "lettre": "C",
+          "texte": "les auteurs recommandent de privilégier le désogestrel chez les femmes de plus de 45 ans",
+          "correcte": false,
+          "justification": "« In addition, the use of desogestrel 75 µg in women older than 45 years should be avoided and replaced by an alternative contraceptive option or levonorgestrel treatment. » (Discussion, Clinical implications and perspectives). Les auteurs recommandent l'inverse, ce qui définit l'applicabilité à la pratique (079).",
+          "notions": [{ "id": "applicabilite-a-la-pratique", "numero": "079", "role": "evaluee" }],
+          "erreur_visee": "inversion d'une recommandation des auteurs"
+        },
+        {
+          "lettre": "D",
+          "texte": "les auteurs recommandent une imagerie par résonance magnétique systématique chez toutes les utilisatrices de désogestrel",
+          "correcte": false,
+          "justification": "« Systematic magnetic resonance imaging during prolonged use of cyproterone acetate or nomegestrol acetate is justified but does not seem cost effective for an oral contraceptive pill such as desogestrel that is widely used and associated with low risk. » (Discussion, Benefit-risk balance with desogestrel). L'imagerie systématique n'est pas recommandée pour le désogestrel (079).",
+          "notions": [{ "id": "applicabilite-a-la-pratique", "numero": "079", "role": "evaluee" }],
+          "erreur_visee": "attribution d'une recommandation non formulée par les auteurs"
+        },
+        {
+          "lettre": "E",
+          "texte": "puisque les rapports de cotes sont similaires avant et après 45 ans, le risque absolu de méningiome attribuable au désogestrel est similaire dans les deux groupes",
+          "correcte": false,
+          "justification": "« […] the absolute risk of meningioma was not the same between age groups: from 3.1 per 100 000 in women aged 20-44 years to 11.0 per 100 000 in women aged 45-54 years […] » (Discussion, Importance of age). Des mesures relatives similaires sont compatibles avec des risques absolus différents, car le risque de base varie avec l'âge (033).",
+          "notions": [{ "id": "difference-de-risque", "numero": "033", "role": "evaluee" }],
+          "erreur_visee": "confusion entre mesure relative et risque absolu"
+        }
+      ],
+      "nb_propositions_correctes": 1
+    }
+  ],
+  "controle_qualite": {
+    "distribution_propositions_correctes": { "1": 4, "2": 4, "3": 4, "4": 2, "5": 0 },
+    "difficulte_moyenne": 6.5,
+    "objectifs_couverts": ["biais de confusion", "score de propension", "cas-témoins"],
+    "source_partielle": false,
+    "reserves": [
+      "Le score de propension n'est pas utilisé dans l'article : il est évalué comme notion théorique appliquée (questions 7 et 13), non comme méthode de l'étude.",
+      "Les sections de déclarations (financement, conflits d'intérêts, enregistrement) et la figure 1 (diagramme de flux) ne figurent pas dans le texte intégral récupéré : aucune question n'y est consacrée.",
+      "Les annexes (supplementary files) ne sont pas accessibles : les propositions reposent sur le texte principal et les tableaux.",
+      "Le contrôle négatif (stérilet au cuivre) et le contrôle positif n'ont pas d'entrée propre dans le référentiel : ils sont rattachés à la validité interne (050) et au facteur de confusion (049).",
+      "La difficulté cible a été fixée à 7 pour couvrir la demande de niveau 6-7 ; la moyenne observée est de 6,5. Le nombre de questions est de 14, comme demandé (le schéma admet 13 à 15).",
+      "Les citations ont été vérifiées sur le texte intégral PMC12153057 (BMJ 2025, accès libre) ; les artefacts d'extraction (par exemple « pis ») ont été évités."
+    ]
+  }
+}

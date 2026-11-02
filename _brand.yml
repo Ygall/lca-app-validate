@@ -1,0 +1,71 @@
+# Thème visuel de l'app "Validation LCA", inspiré de la charte graphique
+# EHESP 2026 (charte "partenaires" 06.2026).
+#
+# Seul le bleu institutionnel (ehesp-blue) provient d'un code exact documenté
+# dans la charte (CMJN 100/80/0/0, RVB 32/57/185, Pantone 286). Les autres
+# teintes (vert, pêche, gris/anthracite, tintes de bleu) sont des
+# approximations visuelles à partir des visuels de la charte : à ajuster si
+# les codes hex exacts du brand book complet deviennent disponibles.
+
+meta:
+  name:
+    short: LCA
+    full: Validation LCA
+
+color:
+  palette:
+    ehesp-blue: "#2039B9"
+    ehesp-blue-dark: "#16297D"
+    ehesp-blue-light: "#E8EEFC"
+    ehesp-sidebar-tint: "#F5F7FC"
+    ehesp-green: "#2CB34A"
+    ehesp-peach: "#F4A98C"
+    anthracite: "#22252B"
+    slate: "#6B7280"
+    off-white: "#F7F8FB"
+  foreground: anthracite
+  background: off-white
+  primary: ehesp-blue
+  success: ehesp-green
+  # secondary/warning/danger volontairement non redéfinis : on garde les
+  # conventions Bootstrap standard (rouge pour la suppression/erreurs, etc.)
+
+typography:
+  fonts:
+    - family: Fredoka
+      source: google
+      weight: [500, 600, 700]
+    - family: Public Sans
+      source: google
+      weight: [400, 500, 600, 700]
+      style: [normal, italic]
+  base:
+    family: Public Sans
+  headings:
+    family: Fredoka
+    weight: 600
+
+defaults:
+  bootstrap:
+    defaults:
+      border-radius: 0.75rem
+      border-radius-lg: 0.85rem
+      border-radius-sm: 0.6rem
+      btn-border-radius: 50rem
+      btn-border-radius-sm: 50rem
+      btn-border-radius-lg: 50rem
+      card-cap-bg: "$brand-ehesp-blue-light"
+      sidebar-bg: "$brand-ehesp-sidebar-tint"
+    rules: |
+      .navbar-brand {
+        font-family: $headings-font-family;
+        font-weight: 700;
+        letter-spacing: .02em;
+      }
+      .card {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+      }
+      .card-header {
+        color: $brand-ehesp-blue-dark;
+        font-weight: 600;
+      }

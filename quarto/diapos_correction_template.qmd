@@ -1,0 +1,24 @@
+---
+format: pptx
+params:
+  export_json: ""
+  vision: "complet"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("_export_helpers.R")
+sujet <- jsonlite::fromJSON(params$export_json, simplifyVector = FALSE)
+```
+
+```{r contenu, results='asis'}
+pptx_first_slide(sujet$sujet)
+
+for (q in sujet$questions) {
+  cat("\n\n## ", q$enonce, "\n\n")
+  pptx_question_slide(q$propositions, corrige = FALSE)
+
+  cat("\n\n## ", q$enonce, "\n\n")
+  pptx_question_slide(q$propositions, corrige = TRUE)
+}
+```

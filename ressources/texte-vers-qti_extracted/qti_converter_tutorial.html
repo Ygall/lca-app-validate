@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutoriel - Convertisseur Word vers QTI avec Éditeur</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .toc ol {
+            margin-left: 20px;
+        }
+        
+        .toc li {
+            margin: 8px 0;
+        }
+        
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            scroll-margin-top: 20px;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        
+        h4 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #e8f4fd 0%, #f1f8ff 100%);
+            border-left: 4px solid #0066cc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .success-box {
+            background: linear-gradient(135deg, #d4edda 0%, #c8e6c9 100%);
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .error-box {
+            background: linear-gradient(135deg, #f8d7da 0%, #ffcdd2 100%);
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #34495e;
+        }
+        
+        code {
+            background: #f1f2f6;
+            color: #e74c3c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .button-demo {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-weight: 500;
+            margin: 5px;
+            border: none;
+            cursor: default;
+        }
+        
+        .button-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+        
+        .button-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .button-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .format-example {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .format-example h5 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .tab-visual {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 1px solid #dee2e6;
+        }
+        
+        .tab-item {
+            padding: 15px 25px;
+            background: #e9ecef;
+            color: #666;
+            border-right: 1px solid #dee2e6;
+        }
+        
+        .tab-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Tutoriel - Convertisseur Word vers QTI</h1>
+        <p class="subtitle">Guide complet d'utilisation de l'application de conversion de questionnaires</p>
+        
+        <div class="toc">
+            <h2>📋 Table des matières</h2>
+            <ol>
+                <li><a href="#introduction">Introduction et présentation</a></li>
+                <li><a href="#prerequisites">Prérequis et compatibilité</a></li>
+                <li><a href="#format">Format des documents source</a></li>
+                <li><a href="#interface">Interface et navigation</a></li>
+                <li><a href="#import">Onglet 1 : Importer</a></li>
+                <li><a href="#edit">Onglet 2 : Éditer</a></li>
+                <li><a href="#export">Onglet 3 : Exporter</a></li>
+                <li><a href="#output">Format de sortie QTI</a></li>
+                <li><a href="#troubleshooting">Résolution de problèmes</a></li>
+                <li><a href="#tips">Conseils et bonnes pratiques</a></li>
+            </ol>
+        </div>
+        
+        <section id="introduction" class="section">
+            <h2>1. Introduction et présentation</h2>
+            
+            <p>Le <strong>Convertisseur Word vers QTI avec Éditeur</strong> est une application web permettant de transformer vos questionnaires à choix multiples (QCM) depuis des documents Word ou des fichiers texte vers le format QTI (Question & Test Interoperability), standard international pour les évaluations numériques.</p>
+            
+            <div class="highlight-box">
+                <h4>🎯 Objectifs de l'application</h4>
+                <ul>
+                    <li>Convertir automatiquement les QCM depuis Word (.docx, .doc) ou texte (.txt)</li>
+                    <li>Éditer et corriger les questions avant export</li>
+                    <li>Générer des fichiers QTI compatibles avec les plateformes d'e-learning</li>
+                    <li>Prendre en charge les questions à réponse unique (QRU) et multiple (QRM)</li>
+                </ul>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>📥 Import flexible</h4>
+                    <p>Importe depuis Word, fichiers texte, ou par glisser-déposer. Extraction automatique du contenu textuel.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>✏️ Éditeur intégré</h4>
+                    <p>Modifiez vos questions directement dans l'interface avec aperçu en temps réel.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📊 Validation automatique</h4>
+                    <p>Détection des erreurs de format et suggestions d'amélioration.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📦 Export QTI standard</h4>
+                    <p>Génération de fichiers ZIP compatibles avec Moodle, Canvas, et autres LMS.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="prerequisites" class="section">
+            <h2>2. Prérequis et compatibilité</h2>
+            
+            <h3>Navigateurs compatibles</h3>
+            <table>
+                <tr>
+                    <th>Navigateur</th>
+                    <th>Version minimale</th>
+                    <th>Statut</th>
+                </tr>
+                <tr>
+                    <td>Chrome</td>
+                    <td>80+</td>
+                    <td>✅ Recommandé</td>
+                </tr>
+                <tr>
+                    <td>Firefox</td>
+                    <td>75+</td>
+                    <td>✅ Compatible</td>
+                </tr>
+                <tr>
+                    <td>Safari</td>
+                    <td>13+</td>
+                    <td>✅ Compatible</td>
+                </tr>
+                <tr>
+                    <td>Edge</td>
+                    <td>80+</td>
+                    <td>✅ Compatible</td>
+                </tr>
+            </table>
+            
+            <h3>Formats de fichiers supportés</h3>
+            <ul>
+                <li><strong>.docx</strong> : Documents Word modernes (recommandé)</li>
+                <li><strong>.doc</strong> : Documents Word anciens</li>
+                <li><strong>.txt</strong> : Fichiers texte brut (UTF-8)</li>
+            </ul>
+            
+            <div class="warning-box">
+                <h4>⚠️ Limitations importantes</h4>
+                <ul>
+                    <li>Taille maximale : 10 MB par fichier</li>
+                    <li>JavaScript doit être activé</li>
+                    <li>Connexion internet requise pour le chargement initial</li>
+                    <li>Les images dans les documents ne sont pas supportées</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="format" class="section">
+            <h2>3. Format des documents source</h2>
+            
+            <p>L'application reconnaît un format spécifique pour les questions. Respecter ce format est essentiel pour une conversion réussie.</p>
+            
+            <h3>Structure de base</h3>
+            
+            <div class="format-example">
+                <h5>📝 Format standard</h5>
+                <pre>QRU : Votre question à réponse unique ?
+A : Première proposition
+B : Deuxième proposition *
+C : Troisième proposition
+
+QRM : Votre question à réponses multiples ?
+A : Première proposition *
+B : Deuxième proposition
+C : Troisième proposition *
+D : Quatrième proposition</pre>
+            </div>
+            
+            <h3>Règles de formatage</h3>
+            
+            <h4>En-tête des questions</h4>
+            <ul>
+                <li><code>QRU :</code> pour les questions à réponse unique</li>
+                <li><code>QRM :</code> pour les questions à réponses multiples</li>
+                <li>Le deux-points (:) après QRU/QRM est obligatoire</li>
+                <li>Insensible à la casse (qru, QRU, Qru acceptés)</li>
+            </ul>
+            
+            <h4>Choix de réponses</h4>
+            <ul>
+                <li>Commencer par une lettre (A, B, C, D, E)</li>
+                <li>Suivi de <code> : </code> (espace, deux-points, espace)</li>
+                <li>L'astérisque (*) indique une réponse correcte</li>
+                <li>Placer l'astérisque après le texte de la réponse</li>
+            </ul>
+            
+            <div class="success-box">
+                <h4>✅ Exemple correct</h4>
+                <pre>QRU : Quelle est la capitale de la France ?
+A : Londres
+B : Berlin
+C : Paris *
+D : Madrid</pre>
+            </div>
+            
+            <div class="error-box">
+                <h4>❌ Exemples incorrects</h4>
+                <pre>QRU Quelle est la capitale ? (manque le :)
+A- Paris * (mauvais séparateur)
+B: Réponse * sans espace
+QRM sans question
+A : Choix</pre>
+            </div>
+            
+            <h3>Variations acceptées</h3>
+            <p>L'application tolère certaines variations mineures :</p>
+            <ul>
+                <li><code>A)</code>, <code>A.</code>, <code>A-</code> comme séparateurs</li>
+                <li>Espaces supplémentaires autour des éléments</li>
+                <li>Lignes vides entre les questions (recommandé)</li>
+                <li>Casse mixte pour les lettres de choix</li>
+            </ul>
+        </section>
+        
+        <section id="interface" class="section">
+            <h2>4. Interface et navigation</h2>
+            
+            <p>L'application utilise une interface à onglets pour guider l'utilisateur dans le processus de conversion.</p>
+            
+            <div class="tab-visual">
+                <div class="tab-item active">📥 1. Importer</div>
+                <div class="tab-item">✏️ 2. Éditer</div>
+                <div class="tab-item">📤 3. Exporter</div>
+            </div>
+            
+            <h3>Workflow recommandé</h3>
+            <ol>
+                <li><span class="step-number">1</span>Importer votre document source</li>
+                <li><span class="step-number">2</span>Vérifier et éditer les questions</li>
+                <li><span class="step-number">3</span>Configurer et exporter au format QTI</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <h4>💡 Navigation intuitive</h4>
+                <p>Chaque onglet se débloque automatiquement lorsque l'étape précédente est complétée. Un indicateur visuel montre votre progression.</p>
+            </div>
+        </section>
+        
+        <section id="import" class="section">
+            <h2>5. Onglet 1 : Importer</h2>
+            
+            <p>Le premier onglet permet d'importer vos documents source et de les convertir en texte éditable.</p>
+            
+            <h3>Méthodes d'importation</h3>
+            
+            <h4>Méthode 1 : Glisser-déposer</h4>
+            <ol>
+                <li>Ouvrez l'explorateur de fichiers</li>
+                <li>Glissez votre fichier dans la zone de dépôt</li>
+                <li>Relâchez le fichier sur la zone bleue</li>
+                <li>L'importation démarre automatiquement</li>
+            </ol>
+            
+            <h4>Méthode 2 : Sélection manuelle</h4>
+            <ol>
+                <li>Cliquez sur <span class="button-demo">Choisir un fichier</span></li>
+                <li>Naviguez vers votre fichier</li>
+                <li>Sélectionnez et confirmez</li>
+                <li>L'importation démarre automatiquement</li>
+            </ol>
+            
+            <h3>Processus d'importation</h3>
+            
+            <h4>Pour les fichiers Word (.docx, .doc)</h4>
+            <ul>
+                <li>Extraction automatique du texte brut</li>
+                <li>Suppression du formatage (gras, italique, etc.)</li>
+                <li>Préservation de la structure en paragraphes</li>
+                <li>Bascule automatique vers l'onglet "Éditer"</li>
+            </ul>
+            
+            <h4>Pour les fichiers texte (.txt)</h4>
+            <ul>
+                <li>Lecture directe du contenu</li>
+                <li>Détection automatique de l'encodage</li>
+                <li>Chargement immédiat dans l'éditeur</li>
+            </ul>
+            
+            <div class="warning-box">
+                <h4>⚠️ Problèmes courants à l'importation</h4>
+                <ul>
+                    <li><strong>Fichier corrompu</strong> : Réessayez avec une version sauvegardée</li>
+                    <li><strong>Encodage incorrect</strong> : Sauvegardez en UTF-8 depuis votre éditeur</li>
+                    <li><strong>Taille excessive</strong> : Divisez en plusieurs fichiers</li>
+                    <li><strong>Format non supporté</strong> : Copiez-collez le contenu dans un .txt</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="edit" class="section">
+            <h2>6. Onglet 2 : Éditer</h2>
+            
+            <p>L'onglet d'édition offre un environnement complet pour réviser, corriger et améliorer vos questions avant l'export.</p>
+            
+            <h3>Interface de l'éditeur</h3>
+            <p>L'interface est divisée en deux panneaux :</p>
+            <ul>
+                <li><strong>Panneau gauche</strong> : Éditeur de texte avec outils</li>
+                <li><strong>Panneau droit</strong> : Aperçu des questions analysées</li>
+            </ul>
+            
+            <h3>Boutons de l'éditeur</h3>
+            
+            <table>
+                <tr>
+                    <th>Bouton</th>
+                    <th>Fonction</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><span class="button-demo button-secondary">🔧 Auto-formater</span></td>
+                    <td>Formatage automatique</td>
+                    <td>Corrige la structure des questions selon le format standard</td>
+                </tr>
+                <tr>
+                    <td><span class="button-demo button-secondary">🧹 Nettoyer</span></td>
+                    <td>Nettoyage du texte</td>
+                    <td>Supprime caractères parasites, normalise espaces et retours ligne</td>
+                </tr>
+                <tr>
+                    <td><span class="button-demo button-secondary">➕ Ajouter exemple</span></td>
+                    <td>Question d'exemple</td>
+                    <td>Insère un modèle de question pour référence</td>
+                </tr>
+                <tr>
+                    <td><span class="button-demo button-warning">🗑️ Effacer tout</span></td>
+                    <td>Remise à zéro</td>
+                    <td>Vide complètement l'éditeur (demande confirmation)</td>
+                </tr>
+                <tr>
+                    <td><span class="button-demo button-success">🔍 Analyser le texte</span></td>
+                    <td>Analyse et validation</td>
+                    <td>Parse le texte et met à jour l'aperçu des questions</td>
+                </tr>
+            </table>
+            
+            <h3>Fonctions détaillées</h3>
+            
+            <h4>🔧 Auto-formater</h4>
+            <p>Cette fonction applique les corrections suivantes :</p>
+            <ul>
+                <li>Normalise les en-têtes QRU/QRM avec deux-points</li>
+                <li>Uniformise les séparateurs de choix (A :, B :, etc.)</li>
+                <li>Corrige la casse des lettres</li>
+                <li>Ajoute des espaces manquants</li>
+                <li>Sépare visuellement les questions</li>
+            </ul>
+            
+            <div class="format-example">
+                <h5>Avant auto-formatage</h5>
+                <pre>qru question mal formatée
+a)réponse1
+b réponse2*
+c.réponse3</pre>
+                <h5>Après auto-formatage</h5>
+                <pre>QRU : Question mal formatée
+A : réponse1
+B : réponse2 *
+C : réponse3</pre>
+            </div>
+            
+            <h4>🧹 Nettoyer</h4>
+            <p>Le nettoyage traite :</p>
+            <ul>
+                <li>Suppression des backslashes parasites</li>
+                <li>Normalisation des apostrophes et guillemets</li>
+                <li>Remplacement des caractères spéciaux</li>
+                <li>Fusion des espaces multiples</li>
+                <li>Limitation des lignes vides consécutives</li>
+            </ul>
+            
+            <h3>Aperçu en temps réel</h3>
+            <p>Le panneau de droite affiche :</p>
+            <ul>
+                <li><strong>Compteur de questions</strong> détectées</li>
+                <li><strong>Aperçu visuel</strong> de chaque question</li>
+                <li><strong>Type de question</strong> (QRU/QRM)</li>
+                <li><strong>Réponses correctes</strong> marquées d'une coche</li>
+                <li><strong>Numérotation automatique</strong></li>
+            </ul>
+            
+            <h3>Détection et résolution d'erreurs</h3>
+            
+            <div class="error-box">
+                <h4>❌ Erreurs communes détectées</h4>
+                <ul>
+                    <li><strong>Question sans texte</strong> : En-tête QRU/QRM vide</li>
+                    <li><strong>Choix sans réponse</strong> : Lettre suivie de rien</li>
+                    <li><strong>Pas de bonne réponse</strong> : Aucun astérisque trouvé</li>
+                    <li><strong>Choix orphelin</strong> : Réponse sans question associée</li>
+                </ul>
+            </div>
+            
+            <p>Lorsque des erreurs sont détectées, une section d'avertissement apparaît avec la liste précise des problèmes à corriger.</p>
+        </section>
+        
+        <section id="export" class="section">
+            <h2>7. Onglet 3 : Exporter</h2>
+            
+            <p>Le dernier onglet permet de configurer et générer les fichiers QTI finaux.</p>
+            
+            <h3>Statistiques du questionnaire</h3>
+            <p>Un tableau de bord affiche :</p>
+            <ul>
+                <li><strong>Questions totales</strong> : Nombre total importé</li>
+                <li><strong>QRU</strong> : Nombre de questions à réponse unique</li>
+                <li><strong>QRM</strong> : Nombre de questions à réponses multiples</li>
+                <li><strong>Questions valides</strong> : Nombre sans erreur</li>
+            </ul>
+            
+            <h3>Configuration du questionnaire</h3>
+            
+            <h4>Paramètres disponibles</h4>
+            <table>
+                <tr>
+                    <th>Champ</th>
+                    <th>Description</th>
+                    <th>Valeur par défaut</th>
+                    <th>Obligatoire</th>
+                </tr>
+                <tr>
+                    <td>Titre du test</td>
+                    <td>Nom affiché dans la plateforme LMS</td>
+                    <td>Questionnaire QCM</td>
+                    <td>Non</td>
+                </tr>
+                <tr>
+                    <td>Identifiant du test</td>
+                    <td>ID unique pour le système</td>
+                    <td>TEST_001</td>
+                    <td>Non</td>
+                </tr>
+                <tr>
+                    <td>Contexte/Instructions</td>
+                    <td>Texte d'introduction pour les étudiants</td>
+                    <td>Vide</td>
+                    <td>Non</td>
+                </tr>
+            </table>
+            
+            <div class="highlight-box">
+                <h4>💡 Conseils de configuration</h4>
+                <ul>
+                    <li>Choisissez un titre descriptif et unique</li>
+                    <li>L'identifiant doit être unique dans votre LMS</li>
+                    <li>Le contexte peut inclure durée, consignes, barème</li>
+                    <li>Évitez les caractères spéciaux dans l'identifiant</li>
+                </ul>
+            </div>
+            
+            <h3>Génération du fichier</h3>
+            
+            <p>Le bouton <span class="button-demo button-success">🚀 Générer le fichier ZIP QTI</span> lance le processus d'export :</p>
+            
+            <ol>
+                <li><strong>Validation finale</strong> : Vérification de toutes les questions</li>
+                <li><strong>Génération XML</strong> : Création des fichiers QTI individuels</li>
+                <li><strong>Assemblage ZIP</strong> : Compilation en archive téléchargeable</li>
+                <li><strong>Téléchargement</strong> : Sauvegarde automatique sur votre ordinateur</li>
+            </ol>
+        </section>
+        
+        <section id="output" class="section">
+            <h2>8. Format de sortie QTI</h2>
+            
+            <p>L'application génère un fichier ZIP contenant tous les éléments nécessaires pour importer vos questions dans une plateforme d'e-learning compatible QTI.</p>
+            
+            <h3>Contenu du fichier ZIP</h3>
+            
+            <h4>Structure du fichier de sortie</h4>
+            <pre>MonQuestionnaire_QTI.zip
+├── pool.xml                    # Fichier de configuration du test
+├── QUESTION_1.xml              # Question individuelle n°1
+├── QUESTION_2.xml              # Question individuelle n°2
+├── QUESTION_3.xml              # Question individuelle n°3
+└── ...                         # Autres questions</pre>
+            
+            <h4>pool.xml - Fichier de configuration</h4>
+            <p>Ce fichier principal contient :</p>
+            <ul>
+                <li><strong>Métadonnées du test</strong> : Titre, identifiant, description</li>
+                <li><strong>Structure générale</strong> : Organisation en sections</li>
+                <li><strong>Références aux questions</strong> : Liens vers chaque fichier XML</li>
+                <li><strong>Configuration d'affichage</strong> : Mode de navigation, soumission</li>
+                <li><strong>Pondération</strong> : Poids de chaque question (par défaut : 1 point)</li>
+            </ul>
+            
+            <h4>Fichiers de questions individuelles</h4>
+            <p>Chaque question génère un fichier XML contenant :</p>
+            <ul>
+                <li><strong>Identificateur unique</strong> : SINGLECHOICE_QUESTION_X ou MULTIPLECHOICE_QUESTION_X</li>
+                <li><strong>Type de question</strong> : Réponse unique ou multiple</li>
+                <li><strong>Énoncé</strong> : Texte de la question avec formatage HTML</li>
+                <li><strong>Choix de réponses</strong> : Toutes les propositions avec identifiants</li>
+                <li><strong>Réponses correctes</strong> : Marquage des bonnes réponses</li>
+                <li><strong>Configuration de scoring</strong> : Attribution des points</li>
+            </ul>
+            
+            <h3>Compatibilité avec les plateformes LMS</h3>
+            
+            <table>
+                <tr>
+                    <th>Plateforme</th>
+                    <th>Compatibilité</th>
+                    <th>Import recommandé</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>Moodle</td>
+                    <td>✅ Excellente</td>
+                    <td>Banque de questions</td>
+                    <td>Support natif QTI 2.1</td>
+                </tr>
+                <tr>
+                    <td>Canvas</td>
+                    <td>✅ Très bonne</td>
+                    <td>Import de quiz</td>
+                    <td>Conversion automatique</td>
+                </tr>
+                <tr>
+                    <td>Blackboard</td>
+                    <td>⚠️ Partielle</td>
+                    <td>Questions et tests</td>
+                    <td>Vérifier après import</td>
+                </tr>
+                <tr>
+                    <td>Brightspace</td>
+                    <td>✅ Bonne</td>
+                    <td>Bibliothèque de questions</td>
+                    <td>QTI 2.1 supporté</td>
+                </tr>
+                <tr>
+                    <td>Chamilo</td>
+                    <td>✅ Bonne</td>
+                    <td>Import exercices</td>
+                    <td>Formatage préservé</td>
+                </tr>
+            </table>
+            
+            <h3>Format XML généré</h3>
+            
+            <div class="format-example">
+                <h5>Exemple de question QRU générée</h5>
+                <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 
+                identifier="SINGLECHOICE_QUESTION_1" 
+                title="Q1" 
+                adaptive="false"&gt;
+    
+    &lt;responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier"&gt;
+        &lt;correctResponse&gt;
+            &lt;value&gt;CHOICE_1_C&lt;/value&gt;
+        &lt;/correctResponse&gt;
+    &lt;/responseDeclaration&gt;
+    
+    &lt;itemBody&gt;
+        &lt;choiceInteraction responseIdentifier="RESPONSE" maxChoices="1"&gt;
+            &lt;prompt&gt;
+                &lt;p&gt;Quelle est la capitale de la France ?&lt;/p&gt;
+            &lt;/prompt&gt;
+            &lt;simpleChoice identifier="CHOICE_1_A"&gt;
+                &lt;p&gt;Londres&lt;/p&gt;
+            &lt;/simpleChoice&gt;
+            &lt;simpleChoice identifier="CHOICE_1_B"&gt;
+                &lt;p&gt;Berlin&lt;/p&gt;
+            &lt;/simpleChoice&gt;
+            &lt;simpleChoice identifier="CHOICE_1_C"&gt;
+                &lt;p&gt;Paris&lt;/p&gt;
+            &lt;/simpleChoice&gt;
+        &lt;/choiceInteraction&gt;
+    &lt;/itemBody&gt;
+&lt;/assessmentItem&gt;</pre>
+            </div>
+            
+            <h3>Encodage et caractères spéciaux</h3>
+            
+            <div class="success-box">
+                <h4>✅ Gestion de l'encodage</h4>
+                <p>L'application génère automatiquement :</p>
+                <ul>
+                    <li><strong>UTF-8 avec BOM</strong> : Garantit la compatibilité maximale</li>
+                    <li><strong>Échappement XML</strong> : Caractères spéciaux correctement traités</li>
+                    <li><strong>Préservation des accents</strong> : Français et autres langues</li>
+                    <li><strong>Balises HTML sécurisées</strong> : Formatage basique préservé</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="troubleshooting" class="section">
+            <h2>9. Résolution de problèmes</h2>
+            
+            <h3>Problèmes d'importation</h3>
+            
+            <div class="error-box">
+                <h4>❌ "Erreur lors de la lecture du fichier Word"</h4>
+                <p><strong>Causes possibles :</strong></p>
+                <ul>
+                    <li>Fichier corrompu ou protégé par mot de passe</li>
+                    <li>Version Word très ancienne (pré-2007)</li>
+                    <li>Document avec macros ou contenu actif</li>
+                </ul>
+                <p><strong>Solutions :</strong></p>
+                <ul>
+                    <li>Enregistrez le document au format .docx standard</li>
+                    <li>Supprimez la protection et les macros</li>
+                    <li>Copiez le contenu dans un nouveau document</li>
+                    <li>Exportez en .txt depuis Word</li>
+                </ul>
+            </div>
+            
+            <div class="error-box">
+                <h4>❌ "Format non supporté"</h4>
+                <p><strong>Solutions :</strong></p>
+                <ul>
+                    <li>Convertissez en .docx, .doc ou .txt</li>
+                    <li>Évitez PDF, RTF, ODT</li>
+                    <li>Utilisez "Enregistrer sous" depuis votre traitement de texte</li>
+                </ul>
+            </div>
+            
+            <h3>Problèmes d'analyse</h3>
+            
+            <div class="warning-box">
+                <h4>⚠️ "Aucune question détectée"</h4>
+                <p><strong>Vérifications :</strong></p>
+                <ul>
+                    <li>Présence de QRU : ou QRM : en début de ligne</li>
+                    <li>Format des choix : A : texte</li>
+                    <li>Au moins une réponse avec astérisque *</li>
+                    <li>Espacement correct entre éléments</li>
+                </ul>
+                <p><strong>Utilisation des outils :</strong></p>
+                <ul>
+                    <li>Bouton "Nettoyer" pour les caractères parasites</li>
+                    <li>Bouton "Auto-formater" pour corriger la structure</li>
+                    <li>Comparer avec le format d'exemple fourni</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <h4>⚠️ "Questions sans bonne réponse"</h4>
+                <p><strong>Correction :</strong></p>
+                <ul>
+                    <li>Ajoutez * après le texte de la bonne réponse</li>
+                    <li>Vérifiez que l'astérisque n'est pas séparé par un espace</li>
+                    <li>Pour QRM : plusieurs * sont autorisés</li>
+                    <li>Utilisez l'aperçu pour vérifier visuellement</li>
+                </ul>
+            </div>
+            
+            <h3>Problèmes d'export</h3>
+            
+            <div class="error-box">
+                <h4>❌ "Erreur lors de la génération du ZIP"</h4>
+                <p><strong>Causes et solutions :</strong></p>
+                <ul>
+                    <li><strong>Mémoire insuffisante</strong> : Réduisez le nombre de questions</li>
+                    <li><strong>Navigateur bloquant</strong> : Autorisez les téléchargements</li>
+                    <li><strong>Caractères interdits</strong> : Simplifiez les titres et identifiants</li>
+                    <li><strong>Questions invalides</strong> : Corrigez toutes les erreurs détectées</li>
+                </ul>
+            </div>
+            
+            <h3>Problèmes d'importation dans le LMS</h3>
+            
+            <div class="warning-box">
+                <h4>⚠️ "Import QTI échoue dans Moodle/Canvas"</h4>
+                <p><strong>Vérifications :</strong></p>
+                <ul>
+                    <li>Décompressez le ZIP et vérifiez le contenu</li>
+                    <li>Identifiants de test uniques dans la plateforme</li>
+                    <li>Droits d'administration suffisants</li>
+                    <li>Limites de taille du LMS respectées</li>
+                </ul>
+                <p><strong>Alternatives :</strong></p>
+                <ul>
+                    <li>Importez les questions par petits groupes</li>
+                    <li>Modifiez les identifiants en cas de conflit</li>
+                    <li>Consultez la documentation spécifique du LMS</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="tips" class="section">
+            <h2>10. Conseils et bonnes pratiques</h2>
+            
+            <h3>Préparation du document source</h3>
+            
+            <div class="success-box">
+                <h4>✅ Recommandations de préparation</h4>
+                <ul>
+                    <li><strong>Structure claire</strong> : Une question par bloc, séparée par une ligne vide</li>
+                    <li><strong>Numérotation cohérente</strong> : A, B, C, D, E dans l'ordre</li>
+                    <li><strong>Texte simple</strong> : Évitez formatage complexe, tableaux, images</li>
+                    <li><strong>Révision manuelle</strong> : Relisez avant importation</li>
+                    <li><strong>Sauvegarde</strong> : Conservez une copie de travail</li>
+                </ul>
+            </div>
+            
+            <h3>Optimisation du workflow</h3>
+            
+            <ol>
+                <li><strong>Import initial</strong>
+                    <ul>
+                        <li>Testez d'abord avec 2-3 questions</li>
+                        <li>Validez le format avant d'importer tout</li>
+                        <li>Préférez .txt pour éviter les problèmes de formatage Word</li>
+                    </ul>
+                </li>
+                <li><strong>Phase d'édition</strong>
+                    <ul>
+                        <li>Utilisez "Nettoyer" en premier</li>
+                        <li>Puis "Auto-formater" si nécessaire</li>
+                        <li>Corrigez manuellement les cas spéciaux</li>
+                        <li>Vérifiez l'aperçu après chaque modification</li>
+                    </ul>
+                </li>
+                <li><strong>Export et test</strong>
+                    <ul>
+                        <li>Configurez des métadonnées descriptives</li>
+                        <li>Testez l'import dans votre LMS avec un sous-ensemble</li>
+                        <li>Vérifiez l'affichage des accents et caractères spéciaux</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h3>Gestion des gros volumes</h3>
+            
+            <div class="highlight-box">
+                <h4>💡 Stratégies pour de nombreuses questions</h4>
+                <ul>
+                    <li><strong>Division par thèmes</strong> : Créez plusieurs fichiers QTI spécialisés</li>
+                    <li><strong>Traitement par lots</strong> : 20-50 questions maximum par session</li>
+                    <li><strong>Validation progressive</strong> : Vérifiez chaque lot avant de continuer</li>
+                    <li><strong>Nomenclature cohérente</strong> : Identifiants prévisibles (THEME_001, THEME_002...)</li>
+                </ul>
+            </div>
+            
+            <h3>Qualité des questions</h3>
+            
+            <h4>Critères d'une bonne question QCM</h4>
+            <ul>
+                <li><strong>Énoncé clair</strong> : Question précise et non ambiguë</li>
+                <li><strong>Distracteurs plausibles</strong> : Réponses incorrectes crédibles</li>
+                <li><strong>Longueur équilibrée</strong> : Choix de taille similaire</li>
+                <li><strong>Une seule bonne réponse</strong> : Pour les QRU</li>
+                <li><strong>Réponses indépendantes</strong> : Chaque choix se suffit à lui-même</li>
+            </ul>
+            
+            <h4>Pièges à éviter</h4>
+            <ul>
+                <li><strong>Négations multiples</strong> : "Lequel n'est pas incorrect..."</li>
+                <li><strong>Indices dans l'énoncé</strong> : Mots qui orientent vers la réponse</li>
+                <li><strong>Réponses "toutes les réponses ci-dessus"</strong> : Généralement à éviter</li>
+                <li><strong>Longueurs révélatrices</strong> : Bonne réponse beaucoup plus longue</li>
+            </ul>
+            
+            <h3>Maintenance et révision</h3>
+            
+            <div class="success-box">
+                <h4>✅ Cycle de vie des questionnaires</h4>
+                <ul>
+                    <li><strong>Version initiale</strong> : Test avec petit groupe d'utilisateurs</li>
+                    <li><strong>Analyse des résultats</strong> : Identification des questions problématiques</li>
+                    <li><strong>Révision</strong> : Modification du document source</li>
+                    <li><strong>Re-conversion</strong> : Nouvelle génération QTI</li>
+                    <li><strong>Déploiement</strong> : Remplacement de l'ancienne version</li>
+                </ul>
+            </div>
+            
+            <h3>Intégration avec d'autres outils</h3>
+            
+            <h4>Workflow étendu</h4>
+            <ol>
+                <li><strong>Conception</strong> : Carte mentale, plan de cours</li>
+                <li><strong>Rédaction</strong> : Document Word collaboratif</li>
+                <li><strong>Conversion</strong> : Cette application QTI</li>
+                <li><strong>Import LMS</strong> : Moodle, Canvas, etc.</li>
+                <li><strong>Test et révision</strong> : Feedback des apprenants</li>
+                <li><strong>Analyse</strong> : Statistiques de réussite</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <h4>🔗 Outils complémentaires</h4>
+                <ul>
+                    <li><strong>Word</strong> : Rédaction et révision collaborative</li>
+                    <li><strong>Excel</strong> : Suivi des statistiques de questions</li>
+                    <li><strong>Git/Google Drive</strong> : Versioning des documents source</li>
+                    <li><strong>Plugins LMS</strong> : Import automatique et synchronisation</li>
+                </ul>
+            </div>
+            
+            <h3>Support et communauté</h3>
+            
+            <p>Pour obtenir de l'aide supplémentaire :</p>
+            <ul>
+                <li><strong>Documentation QTI officielle</strong> : Spécifications IMS Global</li>
+                <li><strong>Forums LMS</strong> : Communautés Moodle, Canvas</li>
+                <li><strong>Test et validation</strong> : Outils de validation QTI en ligne</li>
+                <li><strong>Formation continue</strong> : Webinaires sur l'évaluation numérique</li>
+            </ul>
+        </section>
+        
+        <footer style="text-align: center; margin-top: 50px; padding: 30px; background: #f8f9fa; border-radius: 10px;">
+            <h3 style="color: #667eea; margin-bottom: 15px;">📚 Fin du tutoriel</h3>
+            <p style="color: #666; font-size: 1.1em;">
+                Ce guide vous accompagne dans l'utilisation complète du convertisseur Word vers QTI.<br>
+                N'hésitez pas à expérimenter et à adapter les conseils à votre contexte pédagogique.
+            </p>
+            <div style="margin-top: 20px; font-size: 0.9em; color: #999;">
+                Version du tutoriel : 2025 | Application compatible QTI 2.1
+            </div>
+        </footer>

@@ -1,0 +1,848 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/top/Default from studio</text>
+    </category>
+  </question>
+  <question type="description" sidesId="019d8af2-378a-769d-be33-f69877de9647">
+    <defaultgrade>0</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>DFASM2 UE7.2 LCA</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p>A partir de l’article proposé, répondez aux questions suivantes :</p>]]></text>
+    </questiontext>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+  </question>
+  <tag>
+    <text>DFASM2 UE7.2 LCA</text>
+  </tag>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b24452d">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question001</text>
+    </name>
+    <generalfeedback format="html">
+      <text><![CDATA[<p><em>Commentaires : A : « affecting around 10% of women of childbearing age » ; B : Faux, la DPP peut survenir dans les premières semaines jusqu&#39;à la fin de la première année de vie de l&#39;enfant ; C : « women with endometriosis have a higher burden of major depression » ; D : Faux, une méta-analyse citée montre que les femmes sous AMP ont un risque PLUS FAIBLE de DPP (OR combiné 0,83 ; IC 95% : 0,71–0,97) ; E : Faux, une étude japonaise (Muchanga et al., 2017) avait précédemment exploré ce lien.</em></p>]]></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant le rationnel de l&#39;étude, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;endométriose touche environ 10% des femmes en âge de procréer.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>La dépression du post-partum (DPP) survient exclusivement dans les 4 premières semaines suivant l&#39;accouchement.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les femmes atteintes d&#39;endométriose présentent une charge plus élevée de dépression majeure au cours de leur vie.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Le recours à une assistance médicale à la procréation (AMP) est associé à un risque plus élevé de DPP comparé à une conception spontanée.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Avant cette étude, aucune donnée publiée n&#39;existait sur l&#39;association entre endométriose et DPP.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b58ef81">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question002</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant les objectifs de l&#39;étude, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;objectif principal était de comparer le risque de DPP entre les femmes avec et sans endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>L&#39;objectif principal était d&#39;évaluer l&#39;efficacité d&#39;un programme de dépistage de la DPP chez les femmes atteintes d&#39;endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;étude visait à explorer dans quelle mesure les antécédents de dépression majeure et l&#39;infertilité pouvaient expliquer l&#39;association entre endométriose et DPP.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>L&#39;étude avait pour objectif de valider les performances diagnostiques de l&#39;EPDS chez les femmes atteintes d&#39;endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;analyse d&#39;interaction entre endométriose et infertilité était un objectif secondaire de l&#39;étude.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b58fb45">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question003</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant le type d&#39;étude, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Il s&#39;agit d&#39;une étude de cohorte exposés-non exposés à base populationnelle.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Il s&#39;agit d&#39;une étude cas-témoins nichée dans une cohorte.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Le recrutement des participantes était prospectif.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Il s&#39;agit d&#39;une étude contrôlée randomisée comparant deux stratégies de suivi post-partum.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;étude repose sur des données auto-déclarées complétées par un appariement à un registre national des naissances.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b5907ed">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question004</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant la définition et la mesure de l&#39;endométriose dans cette étude, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>L&#39;endométriose était définie par un diagnostic histologique confirmé lors d&#39;une intervention chirurgicale.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;endométriose était identifiée par une déclaration auto-rapportée d&#39;un diagnostic posé avant la grossesse, en format oui/non.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>La concordance entre l&#39;endométriose auto-rapportée et les dossiers médicaux a été estimée entre 72 et 95% dans des études de validation antérieures.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Les auteurs disposaient d&#39;informations sur le stade et la sévérité de l&#39;endométriose pour les participantes incluses.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>La prévalence de l&#39;endométriose auto-rapportée dans la population d&#39;analyse était de 1,5%.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b590b3d">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question005</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant la mesure de la dépression du post-partum et l&#39;échelle EPDS utilisée dans cette étude, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;EPDS est un questionnaire de 10 items conçu pour dépister les symptômes dépressifs et anxieux en période périnatale.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Dans l&#39;étude MoBa, la version complète de l&#39;EPDS à 10 items a été administrée avec un seuil de positivité de ≥ 13.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>La version abrégée à 4 items utilisée dans cette étude avec un seuil de ≥ 6 identifie une proportion de femmes avec DPP comparable à celle de la version complète avec un seuil de ≥ 13.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>L&#39;EPDS a été administré à 1 mois post-partum, permettant une comparaison directe avec d’autres études.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;EPDS abrégé a été employée dans d&#39;autres publications.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b590df1">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question006</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant les variables prises en compte dans l&#39;analyse, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;âge maternel, l&#39;IMC et le statut socio-économique (éducation et revenu) ont été identifiés comme des facteurs de confusion et inclus dans le modèle principal ajusté.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Les antécédents de dépression majeure au cours de la vie et l&#39;infertilité ont été traités comme des facteurs de confusion dans les modèles multivariés principaux.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;infertilité était définie par l&#39;incapacité à concevoir dans les 12 mois, le recours à l&#39;AMP, ou les deux.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Le mode de conception (AMP ou spontané) était recueilli à partir du Registre Médical des Naissances de Norvège.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>La parité était incluse comme covariable d&#39;ajustement dans le modèle de régression principal.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b5910cd">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question007</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant les analyses statistiques, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les auteurs ont utilisé une régression log-binomiale permettant d&#39;estimer directement des risques relatifs (RR).</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L’analyse de sensibilité comportait la recherche d’une interaction entre la critère de jugement et l’antécédent de dépression ou une infertilité.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les erreurs standard ont été ajustées par une variance robuste en clusters pour tenir compte de l&#39;inclusion possible de plusieurs grossesses chez une même femme.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;analyse principale était une analyse en cas complets ; une analyse de sensibilité par imputation multiple par équations chaînées a été réalisée pour évaluer la robustesse des résultats.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>L&#39;imputation multiple a été réalisée uniquement sur les données manquantes concernant le critère de jugement (DPP).</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b591287">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question008</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant le diagramme de flux des participants (Fig. 1), quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Le nombre total de patientes dans la cohorte MoBa était de 112 704.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Le taux de non-réponse au questionnaire à 6 mois post-partum (Q4) était supérieur à celui du questionnaire de recrutement (Q1).</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les grossesses multiples et les morts fœtales in utero ont été exclues avant la constitution des 85 523 grossesses singletons vivantes ayant répondu aux deux questionnaires.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Parmi les exclusions réalisées à partir des 85 523 grossesses éligibles, les données manquantes sur les facteurs de confusion (IMC et statut socio-économique) représentaient la source d&#39;exclusion la plus importante.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>La mort fœtale in utero (stillbirth) représentait la principale cause d&#39;exclusion avec 1 490 grossesses exclues.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b591f2a">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question009</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant les caractéristiques initiales des participantes (Tableau 1), quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les femmes atteintes d&#39;endométriose étaient en moyenne plus âgées au moment de l&#39;accouchement que celles sans endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>La proportion de femmes nullipares était significativement plus élevée dans le groupe endométriose que dans le groupe sans endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Les femmes avec endométriose présentaient une prévalence d&#39;obésité (IMC &gt; 30) plus élevée que les femmes sans endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Le recours à l&#39;AMP était environ 11 fois plus fréquent chez les femmes avec endométriose que chez celles sans endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>La prévalence des antécédents de dépression majeure au cours de la vie était de 33% dans le groupe endométriose, contre 23% dans le groupe sans endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b592cb0">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question010</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant les analyses stratifiées et les tests d&#39;interaction, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Une interaction significative a été mise en évidence entre l&#39;endométriose et l&#39;infertilité sur le risque de DPP (p = 0,009), justifiant la présentation des résultats stratifiés.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Chez les femmes avec endométriose ayant conçu sans difficulté de fertilité, le risque ajusté de DPP était significativement augmenté (aRR = 1,61 ; IC 95% : 1,34-1,92) par rapport aux femmes sans endométriose.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Chez les femmes avec endométriose et infertilité, le risque de DPP était significativement réduit par rapport aux femmes sans endométriose ni infertilité (aRR = 0,78 ; IC 95% : 1,03-1,34).</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;absence d&#39;interaction significative entre endométriose et antécédents de dépression majeure (p = 0,426) signifie que l&#39;association entre endométriose et DPP n’est significativement pas hétérogène.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les résultats de l&#39;analyse stratifiée suggèrent que l&#39;effet délétère de l&#39;endométriose sur le risque de DPP est principalement porté par les femmes ayant conçu sans difficulté de fertilité.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b593b01">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question011</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant les biais potentiels de cette étude, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Un biais de classement non différentiel de l&#39;endométriose, lié à l&#39;utilisation de l&#39;auto-déclaration, tendrait à réduire l&#39;association observée avec la DPP vers la valeur nulle.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Un biais de confusion résiduelle ne peut pas exister dans cette étude car les auteurs ont ajusté sur les principaux facteurs de confusion (âge, IMC, statut socio-économique).</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Le fait que les femmes avec les symptômes les plus sévères soient davantage susceptibles d&#39;avoir reçu un diagnostic d&#39;endométriose pourrait conduire à une surestimation de l&#39;association avec la DPP par un biais de classement.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Un biais de sélection est présent du fait que la cohorte MoBa est limitée aux femmes ayant mené une grossesse jusqu&#39;à la naissance, sous-représentant les cas d&#39;endométriose sévère avec infertilité persistante.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>La mesure de la DPP à 6 mois post-partum pourrait avoir conduit à un biais de sélection si les femmes présentant une DPP sont plus susceptibles de ne pas avoir répondu au questionnaire Q4.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b593caa">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question012</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>À partir des résultats de cette étude, quelle est ou quelles sont les propositions les plus défendables en pratique clinique ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Ces résultats justifient à eux seuls la modification immédiate des recommandations cliniques nationales sur le dépistage de la DPP.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Ces résultats pourraient justifier un suivi post-partum renforcé des femmes atteintes d&#39;endométriose, en particulier celles ayant conçu sans difficulté de fertilité, chez qui le sur-risque est le plus marqué.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Ces résultats pourraient justifier un suivi post-partum renforcé des femmes atteintes d&#39;endométriose, en particulier celles ayant conçu sans difficulté de fertilité, chez qui le sur-risque est le plus marqué.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>L&#39;utilisation de l&#39;EPDS dans le suivi post-partum des femmes avec endométriose est contre-indiquée car la version abrégée utilisée dans cette étude n&#39;est pas validée.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Des études complémentaires dans d&#39;autres populations et avec des méthodologies plus robustes seraient nécessaires avant de modifier des recommandations cliniques établies.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b5949ae">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question013</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Concernant la discussion et les conclusions des auteurs, quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Les auteurs concluent que l&#39;endométriose est une cause directe de DPP démontrée par leur étude.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les auteurs soulignent que la comparaison avec l&#39;étude japonaise est limitée par des différences méthodologiques, notamment la version de l&#39;EPDS, le moment d&#39;évaluation et les variables d&#39;ajustement.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>La conclusion selon laquelle les femmes atteintes d&#39;endométriose pourraient bénéficier d&#39;un suivi rapproché est directement étayée par les résultats d&#39;un essai d&#39;intervention randomisé inclus dans cet article.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les auteurs suggèrent que l&#39;effet protecteur de l&#39;infertilité sur le risque de DPP pourrait être lié à la satisfaction de mener une grossesse à terme après un parcours difficile, à une plus grande préparation psychologique, ou à un suivi médical plus intensif.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Les auteurs reconnaissent que les résultats demandent à être répliqués et appellent à des études futures dans d&#39;autres pays.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+  <question type="sngmultichoice" sidesId="08903ef92969497c6f9c7b6b0b59538d">
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <single></single>
+    <shuffleanswers>false</shuffleanswers>
+    <answernumbering>ABC</answernumbering>
+    <name>
+      <text>Question014</text>
+    </name>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <questiontext format="html">
+      <text><![CDATA[<p><strong>Les auteurs ont utilisé une régression log-binomiale multivariée pour contrôler la confusion. L&#39;utilisation d&#39;un score de propension aurait-elle pu améliorer l&#39;analyse ? Quelle est ou quelles sont les propositions exactes ?</strong></p>]]></text>
+    </questiontext>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Un score de propension est construit en estimant, pour chaque participante, la probabilité d&#39;appartenir au groupe exposé (endométriose) conditionnellement aux variables de confusion mesurées.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>L&#39;appariement ou la pondération par score de propension permet d’équilibrer les caractéristiques initiales entre les deux groupes.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Le score de propension permet d&#39;éliminer le biais de confusion lié aux variables non mesurées, ce qui représente son principal avantage par rapport à la régression multivariée classique.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="50">
+      <text><![CDATA[<p>Une pondération par l&#39;inverse de la probabilité d&#39;exposition (IPTW) basée sur le score de propension permet de créer une pseudo-population dans laquelle la distribution des facteurs de confusion est équilibrée entre les groupes, renforçant la validité interne.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer format="html" fraction="0">
+      <text><![CDATA[<p>Un matching basé sur le score de propension aurait forcément réduit très fortement le nombre de contrôle.</p>]]></text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <tags format="html">
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+      <tag>
+        <text>019d8af2-378a-769d-be33-f69877de9647</text>
+      </tag>
+    </tags>
+    <tag>
+      <text>DFASM2 UE7.2 LCA</text>
+    </tag>
+  </question>
+</quiz>

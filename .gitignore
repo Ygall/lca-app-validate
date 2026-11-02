@@ -1,0 +1,15 @@
+# État local de RStudio / de l'éditeur
+.Rproj.user/
+.Rhistory
+.RData
+.claude/settings.local.json
+
+# Sessions de travail de l'enseignant (données personnelles, pas du code)
+saves/*.rds
+
+# Capture de la page UNESS Studio (contenu tiers, session de l'utilisateur)
+ressources/UNESS Studio.html
+ressources/UNESS Studio_files/
+
+# Artefacts macOS d'archives
+__MACOSX/

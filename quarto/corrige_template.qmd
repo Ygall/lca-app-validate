@@ -1,0 +1,20 @@
+---
+format: docx
+params:
+  export_json: ""
+  vision: "complet"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("_export_helpers.R")
+sujet <- jsonlite::fromJSON(params$export_json, simplifyVector = FALSE)
+vision <- params$vision
+```
+
+```{r contenu, results='asis'}
+docx_encart(sujet$sujet)
+for (q in sujet$questions) {
+  docx_question_block(q$enonce, q$propositions, vision)
+}
+```
