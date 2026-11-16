@@ -10,6 +10,7 @@ mod_diff_overview_ui <- function(id) {
 }
 
 #' Petit tableau de contingence 2x2 (initial correct × humain coché)
+#' @noRd
 tableau_accord_2x2 <- function(accord) {
   shiny::tags$table(
     class = "table table-sm table-bordered mb-2",
@@ -34,7 +35,12 @@ tableau_accord_2x2 <- function(accord) {
 
 mod_diff_overview_server <- function(id, rv) {
   shiny::moduleServer(id, function(input, output, session) {
-    total <- shiny::reactive({ shiny::req(rv$questions_meta); nrow(rv$questions_meta) })
+    # Toutes les questions : une question supprimée ou ajoutée fait partie des
+    # écarts à montrer entre le sujet initial et le sujet final.
+    questions <- shiny::reactive({
+      shiny::req(rv$questions_final)
+      table_questions(rv$questions_final)
+    })
 
     etat_modifiee <- function(i) {
       shiny::req(rv$final, rv$questions_final)
@@ -42,16 +48,26 @@ mod_diff_overview_server <- function(id, rv) {
     }
 
     # Vue en lecture seule : rien à sauvegarder en quittant une question.
-    nav <- mod_question_nav_server("nav", total, on_navigate = function(idx) invisible(NULL), state_fn = etat_modifiee)
+    nav <- mod_question_nav_server("nav", questions, on_navigate = function(idx) invisible(NULL), state_fn = etat_modifiee)
 
     output$compteurs <- shiny::renderUI({
       shiny::req(rv$imported)
-      qs <- rv$questions_meta$numero
-      diffs <- lapply(qs, function(n) compute_question_diff(rv, n))
+      tq <- questions()
+      # Les compteurs de modifications portent sur les questions du sujet
+      # initial qui sont conservées ; ajouts et suppressions sont comptés à part.
+      conservees <- tq$numero[!tq$supprimee & !tq$ajoutee]
+      diffs <- lapply(conservees, function(n) compute_question_diff(rv, n))
       q_mod <- sum(vapply(diffs, function(d) d$any_modifie, logical(1)))
       p_mod <- sum(vapply(diffs, function(d) sum(d$propositions$any_modifie), integer(1)))
+      p_total <- sum(vapply(diffs, function(d) nrow(d$propositions), integer(1)))
       flags_non_resolus <- sum(vapply(diffs, function(d) d$n_flags_non_resolus, integer(1)))
       accord <- compute_agreement_stats(rv)
+      n_supprimees <- sum(tq$supprimee)
+      n_ajoutees <- sum(tq$ajoutee & !tq$supprimee)
+      mouvements <- c(
+        if (n_ajoutees > 0) sprintf("%d ajoutée(s)", n_ajoutees),
+        if (n_supprimees > 0) sprintf("%d supprimée(s)", n_supprimees)
+      )
 
       box_theme <- bslib::value_box_theme(bg = "#E8EEFC", fg = "#16297D")
       flag_theme <- if (flags_non_resolus > 0) {
@@ -63,17 +79,25 @@ mod_diff_overview_server <- function(id, rv) {
         col_widths = c(2, 2, 2, 6),
         fill = FALSE,
         fillable = FALSE,
-        bslib::value_box(title = "Questions modifiées", value = sprintf("%d / %d", q_mod, length(qs)), theme = box_theme),
-        bslib::value_box(title = "Propositions modifiées", value = sprintf("%d / %d", p_mod, nrow(rv$propositions_json)), theme = box_theme),
+        bslib::value_box(
+          title = "Questions modifiées", value = sprintf("%d / %d", q_mod, length(conservees)), theme = box_theme,
+          if (length(mouvements)) shiny::p(class = "small mb-0", paste(mouvements, collapse = " · "))
+        ),
+        bslib::value_box(title = "Propositions modifiées", value = sprintf("%d / %d", p_mod, p_total), theme = box_theme),
         bslib::value_box(title = "Flags non résolus", value = flags_non_resolus, theme = flag_theme),
         bslib::card(
           bslib::card_header("Accord avec la version initiale"),
           bslib::card_body(
             tableau_accord_2x2(accord),
             shiny::p(class = "mb-0 small",
-                     sprintf("Accord : %.0f%% — κ de Cohen = %s",
-                             accord$pourcentage_accord * 100,
-                             if (is.na(accord$kappa)) "—" else sprintf("%.2f", accord$kappa)))
+                     if (accord$total > 0) {
+                       sprintf("Accord : %.0f%% — κ de Cohen = %s",
+                               accord$pourcentage_accord * 100,
+                               if (is.na(accord$kappa)) "—" else sprintf("%.2f", accord$kappa))
+                     } else {
+                       "Aucune question du sujet initial n'est conservée."
+                     },
+                     if (n_supprimees > 0) " (questions supprimées non prises en compte)")
           )
         )
       )
@@ -81,8 +105,14 @@ mod_diff_overview_server <- function(id, rv) {
 
     output$notions <- shiny::renderUI({
       shiny::req(rv$imported, rv$raw_json, rv$notions_final)
-      # État arbitré (Partie 2), pas le JSON d'origine : suit les ajouts/retraits.
-      rep <- compute_notions_repartition(rv$notions_final, rv$raw_json, rv$referentiel)
+      # État arbitré (Partie 2), pas le JSON d'origine : suit les ajouts/retraits
+      # de notions comme de questions (les questions supprimées ne comptent pas).
+      conserves <- numeros_conserves(rv$questions_final)
+      rep <- compute_notions_repartition(
+        rv$notions_final[rv$notions_final$question %in% conserves, , drop = FALSE],
+        rv$raw_json, rv$referentiel,
+        n_propositions = sum(rv$final$numero %in% conserves)
+      )
       resume <- if (nrow(rep$table) > 0) {
         sprintf("%d notions — %d propositions sur %d rattachées à une notion",
                 nrow(rep$table), rep$n_propositions_avec_notion, rep$n_propositions)

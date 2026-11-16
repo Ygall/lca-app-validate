@@ -16,13 +16,14 @@ mod_export_ui <- function(id) {
     bslib::card_header("Export"),
     bslib::card_body(
       shiny::uiOutput(ns("quarto_statut")),
+      shiny::uiOutput(ns("controles")),
       shiny::div(class = "mb-3", shiny::uiOutput(ns("btn_tout"))),
       bslib::layout_columns(
         col_widths = c(3, 3, 3, 3),
         fill = FALSE,
         fillable = FALSE,
         export_bloc_ui(ns, "json", "JSON",
-                        "Sujet consolidé complet (réponses et justifications), réimportable dans l'application."),
+                        "Sujet consolidé complet (réponses et justifications finales), au format lca-create."),
         export_bloc_ui(ns, "sujet", "Sujet",
                         "Document Word, propositions seules, sans corrigé — pour les étudiants."),
         export_bloc_ui(ns, "corrige", "Corrigé",
@@ -35,9 +36,23 @@ mod_export_ui <- function(id) {
   )
 }
 
-mod_export_server <- function(id, rv, app_dir) {
+mod_export_server <- function(id, rv) {
   shiny::moduleServer(id, function(input, output, session) {
     quarto_ok <- tryCatch(!is.null(quarto::quarto_path()), error = function(e) FALSE)
+
+    # Écarts au format attendu, que l'ajout ou la suppression de questions
+    # peut introduire : signalés, jamais bloquants.
+    output$controles <- shiny::renderUI({
+      shiny::req(rv$imported)
+      alertes <- controles_sujet(rv)
+      if (length(alertes)) {
+        shiny::div(
+          class = "alert alert-warning",
+          shiny::strong("À vérifier avant diffusion :"),
+          shiny::tags$ul(class = "mb-0", lapply(alertes, shiny::tags$li))
+        )
+      }
+    })
 
     output$quarto_statut <- shiny::renderUI({
       if (!quarto_ok) {
@@ -86,7 +101,7 @@ mod_export_server <- function(id, rv, app_dir) {
       content = function(file) {
         shiny::req(rv$imported)
         shiny::withProgress(message = "Génération du sujet...", {
-          out <- render_export(rv, "etudiant", "quarto/corrige_template.qmd", "docx", app_dir)
+          out <- render_export(rv, "etudiant", "corrige_template.qmd", "docx")
           file.copy(out, file, overwrite = TRUE)
         })
       }
@@ -97,7 +112,7 @@ mod_export_server <- function(id, rv, app_dir) {
       content = function(file) {
         shiny::req(rv$imported)
         shiny::withProgress(message = "Génération du corrigé...", {
-          out <- render_export(rv, "complet", "quarto/corrige_template.qmd", "docx", app_dir)
+          out <- render_export(rv, "complet", "corrige_template.qmd", "docx")
           file.copy(out, file, overwrite = TRUE)
         })
       }
@@ -108,7 +123,7 @@ mod_export_server <- function(id, rv, app_dir) {
       content = function(file) {
         shiny::req(rv$imported)
         shiny::withProgress(message = "Génération des diapositives...", {
-          out <- render_export(rv, "complet", "quarto/diapos_correction_template.qmd", "pptx", app_dir)
+          out <- render_export(rv, "complet", "diapos_correction_template.qmd", "pptx")
           file.copy(out, file, overwrite = TRUE)
         })
       }
@@ -134,27 +149,21 @@ mod_export_server <- function(id, rv, app_dir) {
                                 auto_unbox = TRUE, pretty = TRUE, na = "null")
 
           shiny::incProgress(0.25, detail = "Sujet (docx)")
-          out_sujet <- render_export(rv, "etudiant", "quarto/corrige_template.qmd", "docx", app_dir)
+          out_sujet <- render_export(rv, "etudiant", "corrige_template.qmd", "docx")
           file.copy(out_sujet, file.path(tmp_dir, paste0("sujet_", id, ".docx")), overwrite = TRUE)
 
           shiny::incProgress(0.25, detail = "Corrigé (docx)")
-          out_corrige <- render_export(rv, "complet", "quarto/corrige_template.qmd", "docx", app_dir)
+          out_corrige <- render_export(rv, "complet", "corrige_template.qmd", "docx")
           file.copy(out_corrige, file.path(tmp_dir, paste0("corrige_", id, ".docx")), overwrite = TRUE)
 
           shiny::incProgress(0.25, detail = "Diapos (pptx)")
-          out_diapos <- render_export(rv, "complet", "quarto/diapos_correction_template.qmd", "pptx", app_dir)
+          out_diapos <- render_export(rv, "complet", "diapos_correction_template.qmd", "pptx")
           file.copy(out_diapos, file.path(tmp_dir, paste0("diapos_correction_", id, ".pptx")), overwrite = TRUE)
 
           shiny::incProgress(0.15, detail = "Compression (.zip)")
-          # `file` doit être résolu en absolu *avant* le setwd() ci-dessous :
-          # une fois le répertoire de travail changé pour tmp_dir, un chemin
-          # relatif s'y résoudrait au lieu de pointer vers la destination
-          # attendue par downloadHandler.
-          file_abs <- normalizePath(file, mustWork = FALSE)
-          fichiers <- list.files(tmp_dir, full.names = FALSE)
-          old_wd <- setwd(tmp_dir)
-          on.exit(setwd(old_wd), add = TRUE)
-          zip::zip(file_abs, fichiers)
+          # `root` plutôt qu'un setwd() : le répertoire de travail est commun à
+          # toutes les sessions d'un même processus R sur un serveur.
+          zip::zip(normalizePath(file, mustWork = FALSE), list.files(tmp_dir), root = tmp_dir)
         })
       }
     )

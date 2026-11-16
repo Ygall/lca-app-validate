@@ -1,14 +1,19 @@
 #' Diff complet (énoncé + propositions) d'une seule question, entre l'original
 #' (version initiale) et l'état final (après arbitrage / édition en Partie 2)
+#' @noRd
 compute_question_diff <- function(rv, numero) {
+  question <- rv$questions_final[rv$questions_final$numero == numero, , drop = FALSE]
+  # Question ajoutée en Comparaison : pas de version initiale, tout est nouveau.
+  ajoutee <- isTRUE(question$ajoutee[1])
+  supprimee <- isTRUE(question$supprimee[1])
   props <- dplyr::left_join(
     rv$final[rv$final$numero == numero, ],
     rv$propositions_json[rv$propositions_json$numero == numero, ],
     by = c("numero", "lettre")
   )
-  props$texte_modifie <- props$texte_final != props$texte
-  props$justification_modifie <- props$justification_final != props$justification
-  props$statut_modifie <- props$correcte_final != props$correcte
+  props$texte_modifie <- ajoutee | props$texte_final != props$texte
+  props$justification_modifie <- ajoutee | props$justification_final != props$justification
+  props$statut_modifie <- ajoutee | props$correcte_final != props$correcte
   props <- props[order(props$lettre), ]
 
   # Notions : comparaison (id + rôle) entre le JSON d'origine et l'état arbitré.
@@ -29,11 +34,11 @@ compute_question_diff <- function(rv, numero) {
   props <- dplyr::left_join(props, flags_q, by = "lettre")
   props$flagged <- !is.na(props$commentaire) & nzchar(trimws(props$commentaire))
 
-  enonce_original <- rv$questions_meta$enonce[rv$questions_meta$numero == numero]
-  enonce_final <- rv$questions_final$enonce[rv$questions_final$numero == numero]
+  enonce_original <- if (ajoutee) "" else rv$questions_meta$enonce[rv$questions_meta$numero == numero]
+  enonce_final <- question$enonce[1]
   enonce_modifie <- !identical(enonce_original, enonce_final)
 
-  any_modifie <- enonce_modifie || any(props$any_modifie)
+  any_modifie <- ajoutee || supprimee || enonce_modifie || any(props$any_modifie)
   # Un flag "non résolu" signale une proposition marquée en Partie 1 dont la
   # question n'a encore reçu aucun arbitrage en Partie 2 (énoncé ou
   # proposition) : une fois la question modifiée, on considère le
@@ -42,6 +47,8 @@ compute_question_diff <- function(rv, numero) {
 
   list(
     numero = numero,
+    ajoutee = ajoutee,
+    supprimee = supprimee,
     enonce_original = enonce_original,
     enonce_final = enonce_final,
     enonce_modifie = enonce_modifie,
@@ -52,6 +59,7 @@ compute_question_diff <- function(rv, numero) {
 }
 
 #' TRUE si la question `numero` diffère de la version initiale (énoncé ou propositions)
+#' @noRd
 question_modifiee <- function(rv, numero) {
   compute_question_diff(rv, numero)$any_modifie
 }
@@ -60,9 +68,13 @@ question_modifiee <- function(rv, numero) {
 #' — indépendamment des arbitrages faits ensuite en Partie 2. Table de
 #' contingence 2x2 (initial correct × humain coché) -> accord, désaccords, taux
 #' d'accord et kappa de Cohen.
+#' @noRd
 compute_agreement_stats <- function(rv) {
+  # Les questions supprimées ne sont pas prises en compte ; les questions
+  # ajoutées n'ont ni version initiale ni réponse en aveugle.
+  conserves <- numeros_conserves(rv$questions_final)
   df <- dplyr::left_join(
-    rv$propositions_json[, c("numero", "lettre", "correcte")],
+    rv$propositions_json[rv$propositions_json$numero %in% conserves, c("numero", "lettre", "correcte")],
     rv$human_answers,
     by = c("numero", "lettre")
   )
@@ -72,9 +84,9 @@ compute_agreement_stats <- function(rv) {
   c <- sum(!df$correcte & df$coche_humain)
   d <- sum(!df$correcte & !df$coche_humain)
 
-  p_o <- (a + d) / n
+  p_o <- if (n > 0) (a + d) / n else NA_real_
   p_e <- ((a + b) / n) * ((a + c) / n) + ((c + d) / n) * ((b + d) / n)
-  kappa <- if (isTRUE(all.equal(p_e, 1))) NA_real_ else (p_o - p_e) / (1 - p_e)
+  kappa <- if (n == 0 || isTRUE(all.equal(p_e, 1))) NA_real_ else (p_o - p_e) / (1 - p_e)
 
   list(
     total = n,
@@ -150,7 +162,10 @@ render_diff_proposition <- function(row) {
 
 #' Rendu complet d'une question (tel que renvoyé par compute_question_diff) :
 #' énoncé (avec diff initial/modifié si édité) puis chaque proposition
+#' @noRd
 render_question_diff <- function(qd) {
+  if (qd$supprimee || qd$ajoutee) return(render_question_entiere(qd))
+
   entete <- if (qd$enonce_modifie) {
     htmltools::tagList(
       htmltools::tags$div(class = "diff-line diff-old", qd$enonce_original),
@@ -163,5 +178,38 @@ render_question_diff <- function(qd) {
   htmltools::tagList(
     entete,
     lapply(seq_len(nrow(qd$propositions)), function(i) render_diff_proposition(qd$propositions[i, ]))
+  )
+}
+
+#' Rendu d'une question supprimée (tout barré) ou ajoutée (tout nouveau) :
+#' pas de comparaison ligne à ligne, la question entière est le changement.
+#' @noRd
+render_question_entiere <- function(qd) {
+  classe <- if (qd$supprimee) "diff-old" else "diff-new"
+  props <- qd$propositions
+  htmltools::tagList(
+    htmltools::tags$p(
+      class = "mb-2",
+      if (qd$supprimee) {
+        htmltools::tags$span(class = "badge text-bg-danger", "Question supprimée — exclue des exports et du score d'accord")
+      } else {
+        htmltools::tags$span(class = "badge text-bg-success", "Question ajoutée")
+      }
+    ),
+    htmltools::tags$div(class = paste("diff-line fw-bold mb-2", classe), qd$enonce_final),
+    lapply(seq_len(nrow(props)), function(i) {
+      htmltools::tagList(
+        htmltools::tags$div(
+          class = paste("diff-line", classe),
+          lettre_coloree(props$lettre[i], props$correcte_final[i]), props$texte_final[i]
+        ),
+        if (!qd$supprimee && nzchar(trimws(props$justification_final[i]))) {
+          htmltools::tags$div(
+            class = "small text-muted ms-3 mb-1",
+            htmltools::tags$em("Justification : "), props$justification_final[i]
+          )
+        }
+      )
+    })
   )
 }

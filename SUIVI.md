@@ -11,39 +11,44 @@ App Shiny (R) permettant à l'enseignant de **valider manuellement** un sujet de
 3. **Vue d'ensemble** — diff visuel entre le corrigé initial d'origine et l'état final arbitré, score d'accord initial/humain (kappa de Cohen).
 4. **Export** — JSON consolidé, docx (sujet vierge + corrigé), pptx (diapos de correction). Pas d'export vers SIDES/UNESS (piste explorée puis abandonnée, voir plus bas).
 
-Pas de dépôt git sur ce projet (`git init` jamais fait — à faire si l'utilisateur le souhaite un jour).
+Dépôt git : `github.com/Ygall/lca-app-validate`. Depuis le 2026-11-16, le projet est un **package R (`lcavalidate`)** — voir la section « Refonte du 2026-11-16 » ci-dessous, qui prime sur les mentions antérieures de `.rds`, de `saves/` et des anciens chemins.
 
 ## Architecture
 
 ```
-app.R                       # page_navbar 5 onglets, construit rv (reactiveValues central)
+DESCRIPTION, NAMESPACE      # package lcavalidate ; exports : lancer_app(), convertir_session_rds()
+app.R                       # point d'entrée de déploiement : pkgload::load_all() + lancer_app()
+manifest.json, .rscignore   # déploiement Posit Connect / Connect Cloud (manifeste à régénérer)
 R/
-  mod_import.R              # import JSON + panneau de reprise de session (.rds)
+  run_app.R                 # app_ui(), app_server(), lancer_app(), chemin_app() (system.file)
+  mod_accueil.R             # accueil : nouvelle session / reprise (fichier ou navigateur) / export / fermeture
   mod_jeu_aveugle.R         # Partie 1
-  mod_comparaison.R         # Partie 2
+  mod_comparaison.R         # Partie 2 (+ ajout / suppression / restauration de question)
   mod_diff_overview.R       # Partie 3
   mod_export.R              # Partie 4 — 4 tuiles : JSON / Sujet / Corrigé / Diapos
   mod_question_nav.R        # sélecteur de question partagé (grille 3 colonnes, cliquable)
   utils_json.R              # parse + validation (jsonvalidate) + reconstruction JSON
   utils_diff.R              # diff ligne à ligne, kappa de Cohen
-  utils_state.R             # init_rv(), chargement d'un sujet dans rv
-  utils_persistence.R       # sauvegarde/reprise/suppression de session .rds
+  utils_state.R             # init_rv(), état initial, ajout/suppression de question, renumérotation, contrôles
+  utils_session.R           # fichier de session JSON : écriture, lecture contrôlée, conversion des anciens .rds
   utils_export.R            # rendu Quarto (docx/pptx) + post-traitement pptx (repositionnement titre)
-quarto/
-  corrige_template.qmd            # docx (vision étudiant/complet)
-  diapos_correction_template.qmd  # pptx (2 diapos/question)
-  _export_helpers.R               # helpers R communs aux deux templates (raw OOXML)
-www/diff.css                # styles diff + grille de sélection de questions
-schema/schema-sujet-lca.json # copie du schéma officiel (validation stricte à l'import)
-saves/                       # sessions .rds sauvegardées (contient déjà une vraie session utilisateur :
-                              # rolland-2026-dry-january-france.rds — NE PAS SUPPRIMER)
-data/exemple_sujet.json      # fixture de test (sujet Roland 2025 méningiome, 14 questions, avec notions ; conforme au schéma ; remplace l'ancienne fixture à l'ancien format le 2026-11-02)
+  _disable_autoload.R       # empêche Shiny de sourcer R/ quand on lance app.R (hors build du package)
+inst/
+  app/www/diff.css          # styles diff + grille de sélection de questions
+  app/www/session.js        # sauvegarde de la session dans le stockage local du navigateur
+  app/_brand.yml            # thème
+  quarto/                   # gabarits docx / pptx + _export_helpers.R (raw OOXML)
+  schema/                   # copies du schéma officiel et du référentiel de notions
+  extdata/exemple_sujet.json # fixture de test (sujet Roland 2025 méningiome, 14 questions, avec notions)
+tests/testthat/             # session (aller-retour, fichiers invalides), questions, export (injection)
+saves/                      # hors git : anciennes sauvegardes .rds de l'utilisateur et leur conversion
+                            # en fichiers de session .json — NE PAS SUPPRIMER
 ```
 
 ## Décisions clés (et pourquoi)
 
 - **R Shiny + bslib**, pas Python : cohérent avec l'environnement (session R active, skill shiny-bslib).
-- **Persistance en `.rds`** (pas de base de données) : autosave à chaque navigation entre questions + à l'import ; panneau de reprise dans l'onglet Import (déplacé depuis Partie 1 à la demande de l'utilisateur) listant les sessions disponibles avec titre + progression, bouton Supprimer avec confirmation modale.
+- **Persistance** : plus aucun `.rds` ni écriture côté serveur depuis le 2026-11-16 (voir la refonte ci-dessous). Auparavant : autosave `.rds` dans `saves/` + panneau de reprise dans l'onglet Import.
 - **Modèle de données** : `rv$propositions_json` (référence initiale immuable) vs `rv$final` (état arbitré, éditable) vs `rv$human_answers` (réponses de l'utilisateur en aveugle) vs `rv$questions_final` (énoncés éditables, séparés de `rv$questions_meta` original) — permet de diffèrer systématiquement original/modifié pour l'export et la Vue d'ensemble.
 - **Sélecteur de question unique et partagé** (`mod_question_nav.R`) entre les 3 parties : grille de tuiles cliquables (3 par ligne, largeur de la barre latérale inchangée), couleur verte = répondu/modifié, contour bleu = question courante, plus boutons Précédent/Suivant **intégrés sous la grille dans la barre latérale** (2026-08-14 : auparavant à côté des actions de chaque partie, dans le contenu principal — déplacé à la demande de l'utilisateur).
 - **Partie 2 (Comparaison)** : statut Initial/Humain/Manuel choisi via tuiles cliquables (commit immédiat dans `rv$final`, pas d'attente de la navigation — plus robuste que l'ancien système basé sur un input radio à resynchroniser). Propositions sur 3 colonnes, présentation compacte (juste "A)" + mini-cases colorées Initial/Vous, pas de texte verbeux). Note terminologie (2026-08-13) : "IA" renommé en "Initial" dans toute l'UI — la première version d'un sujet n'est pas nécessairement générée par IA (échanges de fichiers entre humains aussi). La clé interne `statut_source == "ia"` (donnée persistée dans les .rds existants) n'a volontairement pas été renommée, pour ne pas casser la lecture des sessions déjà sauvegardées.
@@ -52,6 +57,20 @@ data/exemple_sujet.json      # fixture de test (sujet Roland 2025 méningiome, 1
 
 - **Référentiel de notions (2026-11-02)** : le skill `lca-create` rattache désormais chaque proposition pertinente à une ou plusieurs notions du référentiel Boussole LCA (`propositions[].notions[]` = `id`, `numero`, `role` evaluee/associee), plus `sujet.referentiel_notions` (version/commit), `sujet.parametres.notions_ciblees` et un bloc racine `fiche_article`. `schema/schema-sujet-lca.json` est maintenant la copie du nouveau schéma du skill (**les JSON à l'ancien format sont rejetés** : `referentiel_notions` obligatoire + justifications devant commencer par une citation « …, « Absence de mention » ou « Sans objet » ; les sessions .rds déjà sauvegardées ne sont pas revalidées et restent reprenables). `schema/boussole_lca_notions.json` est la copie du référentiel (143 notions) : il ne sert qu'à retrouver le libellé à partir de l'`id` (stable) ; le `numero` affiché est celui du sujet. À recopier depuis `~/.claude/skills/lca-create/assets/` quand le skill évolue. Modèle : `rv$notions_json` (référence initiale immuable, table longue question/lettre/id/numero/role, issue de `notions_depuis_raw()`) vs `rv$notions_final` (état arbitré), hors de `rv$propositions_json`/`rv$final` ; `rv$referentiel` (copie du référentiel) est posé dans `app.R`. Les deux tables sont persistées dans le .rds (une session antérieure est reconstruite depuis `raw_json`). **Partie 2** : sous chaque justification, pastilles de notions (clic sur le libellé = bascule évaluée/associée, × = retirer) + liste déroulante des 143 notions groupées par domaine ; une notion ajoutée est « évaluée » si la proposition n'en a pas encore, sinon « associée » ; les actions remontent par un unique input événementiel `notion_action` (« lettre|ajouter|retirer|basculer|id »), appliqué par `modifier_notions()` (fonction pure, `utils_notions.R`) avec commit et sauvegarde immédiats (comme les tuiles de statut ; ne touche ni aux zones de texte ni à `rv$final`). Un avertissement signale les écarts entre numéros cités entre parenthèses dans la justification et notions rattachées. **Partie 3** : la répartition (carte « Répartition des notions théoriques », histogramme HTML/CSS empilé évaluée/associée, ★ = ciblée) suit `rv$notions_final` ; un changement de notions compte comme modification de la proposition (compteurs, tuile verte, détail « Notions initiales/modifiées »). **Export JSON complet** : réécrit `notions` depuis l'état arbitré (tableau vide si tout a été retiré d'une proposition qui en avait ; champ absent sinon) et injecte `sujet.referentiel_notions` si un sujet à l'ancien format reçoit des notions.
 - **Limite connue (antérieure au nouveau format)** : le JSON « complet » exporté contient un bloc racine `validation` que le schéma (`additionalProperties: false`) refuse — il n'est donc pas réimportable tel quel malgré la mention « réimportable » ; à traiter si le besoin apparaît.
+
+## Refonte du 2026-11-16 : package, session en fichier, ajout / suppression de questions
+
+Demande : préparer un déploiement public sans contrôle d'accès (serveur type Posit Connect) et une installation en trois lignes depuis GitHub ; pouvoir ajouter ou supprimer une question en Comparaison.
+
+- **Package `lcavalidate`** : `lancer_app()` renvoie l'objet `shinyApp` (affiché en console, il lance l'app ; `app.R` le renvoie tel quel pour un déploiement). Les ressources sont lues par `chemin_app()` (`system.file`). NAMESPACE et `man/` ont été écrits à la main au format roxygen (roxygen2 n'était pas installé) : `devtools::document()` peut les reprendre. `R CMD check --no-manual` : reste un WARNING « non-ASCII characters » (chaînes françaises dans le code), assumé pour un package hors CRAN.
+- **Session = un fichier JSON** (`format: "lca-validate-session"`, `version: 1`) contenant le sujet d'origine et l'état de l'utilisateur (questions, propositions arbitrées, réponses, flags, notions). Les tables dérivées du sujet sont recalculées à la lecture. **Pas de `.rds`** : désérialiser un `.rds` déposé par un inconnu sur un serveur public n'est pas sûr. La lecture (`etat_depuis_session()`) repart de l'état initial du sujet et n'y reporte que des valeurs contrôlées (type, question et lettre connues) : un fichier incomplet ou retouché donne toujours un état cohérent. Le sujet d'une session n'est pas revalidé contre le schéma (les sessions à l'ancien format restent reprenables).
+- **Stockage navigateur** (`localStorage`, clé propre au chemin de l'app) : le serveur y pousse la session complète à chaque modification (temporisation 800 ms) ; à la connexion la page n'annonce que le résumé, le contenu n'est transmis que sur « Reprendre ». « Fermer la session » efface le stockage et recharge la page (repartir d'une session Shiny neuve plutôt que vider `rv` : les modules gardent un état propre). L'heure affichée et le nom du fichier exporté utilisent le fuseau du navigateur (un serveur tourne en UTC).
+- **Ajout / suppression de questions** (barre latérale de Comparaison). `numero` reste l'identifiant interne stable ; l'ordre d'affichage est l'ordre des lignes de `rv$questions_final`, qui porte `supprimee`, `ajoutee` et les métadonnées des questions ajoutées (`notion`, `difficulte`, `section_article`, saisies dans la fenêtre d'ajout car exigées par le schéma). La suppression est **réversible** (bouton Restaurer) : la question reste dans la session, tuile « ✕ ». Une question ajoutée a ses 5 propositions en statut `manuel` (pas de tuiles Initial/Vous). `rv$questions_meta`, `rv$propositions_json`, `rv$human_answers` et `rv$flags` ne contiennent que les questions d'origine.
+- **« Ne pas prendre en compte »** (consigne de l'utilisateur, phrase tronquée — interprétation retenue, à confirmer) : une question supprimée est exclue des exports, des compteurs, des flags non résolus, de la répartition des notions et du score d'accord ; une question ajoutée n'entre pas dans le score d'accord et n'apparaît pas dans le jeu en aveugle.
+- **Renumérotation** : les questions conservées sont numérotées Q1…Qk dans l'interface et à l'export (`numero`, préfixe « 3) » de l'énoncé via `renumeroter_enonces()`, appliqué à l'export seulement — l'énoncé stocké garde son préfixe d'origine, pour ne pas marquer toutes les questions suivantes comme modifiées). L'export met aussi à jour `nb_propositions_correctes`, `type` (QRU → QRM si plus exactement une proposition exacte), `sujet.parametres.nombre_questions` et `controle_qualite`. L'onglet Export signale, sans bloquer, un sujet hors 13–15 questions, un énoncé ou une proposition vide, une question sans proposition exacte.
+- **Durcissement des exports Quarto** : les textes du sujet sont neutralisés avant rendu (`texte_inerte()`, `esc_xml()`, `esc_md()` dans `_export_helpers.R`). Auparavant, un énoncé contenant un saut de ligne suivi de ``` sortait du bloc `{=openxml}` (pptx corrompu), et un shortcode `{{< env VAR >}}` aurait été exécuté sur le serveur. Couvert par `test-export.R`.
+- **Course « contenu d'une question rangé sous une autre » : corrigée à la racine.** Le garde-fou `chargement_recent` du 2026-08-14 (voir plus bas) ne protégeait que `save_now()` et se levait au premier écho d'un champ — y compris l'écho d'un chargement *antérieur*. Reproduit le 2026-11-16 en enchaînant des clics « Suivant » à ~10 ms d'intervalle (équivalent, sur un serveur distant, à des clics humains normaux) : une question recevait les textes de la précédente. Remplacé par : (1) en Comparaison, un **accusé de réception** numéroté (`charge_id` côté serveur, message `lca-accuse`, `input$charge_ack`) — `save_current()` ne fait rien tant que le navigateur n'a pas confirmé le dernier chargement ; (2) des **identifiants de cases propres à chaque question** (`reponse_3_A`, `flag_3_A` en Partie 1 ; `manuel_3_A` en Partie 2), qui ne peuvent donc être lus que pour leur question ; (3) le clic sur une tuile Initial/Vous/Modifier transporte le numéro de la question et est ignoré s'il ne correspond plus à la question affichée. « Modifier » part désormais de la réponse actuellement retenue (au lieu de relire une case éventuellement absente). Vérifié : rafales de clics sans aucune modification parasite, et saisie normale toujours enregistrée (Suivant, tuiles, case « Correcte », changement d'onglet direct).
+- **Test dans le navigateur sans sélecteur de fichier** : `.claude/launch.json` expose `inst/extdata` sous `/dev-fixture/` (uniquement dans la prévisualisation) ; on dépose le fichier par JavaScript (`DataTransfer` + événement `change` sur `accueil-fichier_sujet`).
 
 ## Bugs réels trouvés et corrigés en cours de route (pas juste des ajustements de goût)
 

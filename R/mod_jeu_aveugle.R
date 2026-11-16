@@ -11,25 +11,44 @@ mod_jeu_aveugle_ui <- function(id) {
   ))
 }
 
-mod_jeu_aveugle_server <- function(id, rv, saves_dir) {
+mod_jeu_aveugle_server <- function(id, rv) {
   shiny::moduleServer(id, function(input, output, session) {
-    total <- shiny::reactive({ shiny::req(rv$questions_meta); nrow(rv$questions_meta) })
+    # Questions jouables en aveugle : celles du sujet d'origine encore
+    # conservées. Une question ajoutée en Comparaison est rédigée par
+    # l'utilisateur lui-même (rien à deviner), une question supprimée ne
+    # compte plus.
+    questions <- shiny::reactive({
+      shiny::req(rv$questions_final)
+      tq <- table_questions(rv$questions_final)
+      tq[!tq$supprimee & !tq$ajoutee, , drop = FALSE]
+    })
+
+    # Les cases à cocher portent le numéro de leur question dans leur
+    # identifiant (`reponse_3_A`) : elles sont reconstruites (renderUI) à chaque
+    # changement de question, ce qui est asynchrone côté navigateur. Avec un
+    # identifiant commun à toutes les questions, un enregistrement survenant
+    # avant que le navigateur ait réaffiché les cases (deux clics rapprochés sur
+    # « Suivant », changement d'onglet immédiat — d'autant plus probable que le
+    # serveur est distant) lisait les réponses de la question quittée et les
+    # rangeait sous le numéro de la nouvelle. Ici, les cases d'une question ne
+    # peuvent être lues que pour elle ; pas encore affichées, elles valent NULL
+    # et rien n'est écrit.
+    id_case <- function(prefixe, idx, L) paste(prefixe, idx, L, sep = "_")
 
     save_current <- function(idx) {
       shiny::req(rv$human_answers)
       lettres_idx <- rv$propositions_json$lettre[rv$propositions_json$numero == idx]
       for (L in lettres_idx) {
         mask_h <- rv$human_answers$numero == idx & rv$human_answers$lettre == L
-        val_rep <- input[[paste0("reponse_", L)]]
+        val_rep <- input[[id_case("reponse", idx, L)]]
         if (!is.null(val_rep)) rv$human_answers$coche_humain[mask_h] <- isTRUE(val_rep)
 
         mask_f <- rv$flags$numero == idx & rv$flags$lettre == L
-        val_flag <- input[[paste0("flag_", L)]]
+        val_flag <- input[[id_case("flag", idx, L)]]
         if (!is.null(val_flag)) {
           rv$flags$commentaire[mask_f] <- if (isTRUE(val_flag)) "Signalé lors du jeu en aveugle" else ""
         }
       }
-      persist_session_rds(rv, saves_dir)
     }
 
     etat_repondu <- function(i) {
@@ -37,30 +56,7 @@ mod_jeu_aveugle_server <- function(id, rv, saves_dir) {
       any(rv$human_answers$coche_humain[rv$human_answers$numero == i])
     }
 
-    nav <- mod_question_nav_server("nav", total, on_navigate = save_current, state_fn = etat_repondu)
-
-    # Même protection que dans mod_comparaison.R : le groupe de cases à
-    # cocher et les champs de flag sont reconstruits (renderUI) à chaque
-    # changement de question, ce qui est asynchrone côté navigateur. Un
-    # save_now() externe (déclenché par un changement d'onglet de la barre
-    # de navigation principale) survenant juste après une navigation interne
-    # pourrait sinon lire input$reponses encore associé à la question
-    # quittée et l'enregistrer sous le numéro de la nouvelle — le save de la
-    # question quittée ayant de toute façon déjà été fait de façon fiable
-    # par on_navigate juste avant.
-    chargement_recent <- FALSE
-    derniere_idx_affichee <- NULL
-    shiny::observe({
-      shiny::req(rv$imported)
-      idx <- nav$current()
-      if (!identical(derniere_idx_affichee, idx)) {
-        derniere_idx_affichee <<- idx
-        chargement_recent <<- TRUE
-      }
-    })
-    lapply(c(paste0("reponse_", LETTERS[1:5]), paste0("flag_", LETTERS[1:5])), function(fid) {
-      shiny::observeEvent(input[[fid]], { chargement_recent <<- FALSE }, ignoreInit = TRUE)
-    })
+    nav <- mod_question_nav_server("nav", questions, on_navigate = save_current, state_fn = etat_repondu)
 
     output$entete <- shiny::renderUI({
       shiny::req(rv$imported)
@@ -93,12 +89,12 @@ mod_jeu_aveugle_server <- function(id, rv, saves_dir) {
           shiny::div(
             class = "flag-checkbox-wrap",
             title = "Signaler cette proposition (à revoir en Comparaison)",
-            shiny::checkboxInput(session$ns(paste0("flag_", L)), label = "\U0001F6A9",
+            shiny::checkboxInput(session$ns(id_case("flag", idx, L)), label = "\U0001F6A9",
                                   value = L %in% flagged_prev)
           ),
           shiny::div(
             class = "flex-grow-1",
-            shiny::checkboxInput(session$ns(paste0("reponse_", L)),
+            shiny::checkboxInput(session$ns(id_case("reponse", idx, L)),
                                   label = paste0(L, ") ", props$texte[i]),
                                   value = L %in% checked_prev, width = "100%")
           )
@@ -110,11 +106,9 @@ mod_jeu_aveugle_server <- function(id, rv, saves_dir) {
 
     shiny::observeEvent(input$verifier, {
       save_current(nav$current())
-      incomplet <- rv$human_answers |>
-        dplyr::group_by(numero) |>
-        dplyr::summarise(repondu = any(coche_humain), .groups = "drop") |>
-        dplyr::filter(!repondu) |>
-        dplyr::pull(numero)
+      q <- questions()
+      repondues <- unique(rv$human_answers$numero[rv$human_answers$coche_humain])
+      incomplet <- q$etiquette[!q$numero %in% repondues]
 
       output$panneau_validation <- shiny::renderUI({
         if (length(incomplet) == 0) {
@@ -123,16 +117,13 @@ mod_jeu_aveugle_server <- function(id, rv, saves_dir) {
         } else {
           shiny::div(class = "alert alert-warning",
                      shiny::strong(sprintf("%d question(s) sans aucune réponse cochée : ", length(incomplet))),
-                     paste(sort(incomplet), collapse = ", "),
+                     paste(incomplet, collapse = ", "),
                      shiny::tags$br(),
                      shiny::tags$small("Cliquez sur les numéros de questions dans la barre latérale pour vous y rendre."))
         }
       })
     })
 
-    list(save_now = function() {
-      if (chargement_recent) return(invisible(NULL))
-      save_current(shiny::isolate(nav$current()))
-    })
+    list(save_now = function() save_current(shiny::isolate(nav$current())))
   })
 }

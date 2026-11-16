@@ -1,0 +1,13 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.claude$
+^\.github$
+^app\.R$
+^manifest\.json$
+^\.rscignore$
+^rsconnect$
+^R/_disable_autoload\.R$
+^SUIVI\.md$
+^ressources$
+^saves$
+^LICENSE\.md$

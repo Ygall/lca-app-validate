@@ -1,12 +1,36 @@
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
+# Les textes du sujet sont saisis par l'utilisateur, et l'application peut être
+# déployée publiquement : aucun ne doit pouvoir être interprété par Quarto ou
+# pandoc. Un saut de ligne suivi de ``` fermerait le bloc brut `{=openxml}`,
+# et un shortcode Quarto ({{< env VAR >}}, {{< include … >}}) serait exécuté
+# sur le serveur. D'où : pas de saut de ligne, et accents graves et accolades
+# écrits en références de caractère.
+texte_inerte <- function(x) {
+  x <- gsub("[\r\n]+", " ", as.character(x %||% ""))
+  gsub("}}", "} }", gsub("{{", "{ {", x, fixed = TRUE), fixed = TRUE)
+}
+
 esc_xml <- function(x) {
-  x <- as.character(x %||% "")
+  x <- texte_inerte(x)
   x <- gsub("&", "&amp;", x, fixed = TRUE)
   x <- gsub("<", "&lt;", x, fixed = TRUE)
   x <- gsub(">", "&gt;", x, fixed = TRUE)
   x <- gsub("\"", "&quot;", x, fixed = TRUE)
+  x <- gsub("`", "&#96;", x, fixed = TRUE)
+  x <- gsub("{", "&#123;", x, fixed = TRUE)
+  x <- gsub("}", "&#125;", x, fixed = TRUE)
   x
+}
+
+# Texte destiné à un titre markdown (titre des diapositives) : tout caractère
+# qui n'est ni une lettre, ni un chiffre, ni une espace est écrit en référence
+# de caractère, que pandoc rend telle quelle sans lui donner de sens markdown.
+esc_md <- function(x) {
+  caracteres <- strsplit(texte_inerte(x), "")[[1]]
+  speciaux <- !grepl("^[[:alnum:] ]$", caracteres)
+  caracteres[speciaux] <- vapply(caracteres[speciaux], function(ch) sprintf("&#%d;", utf8ToInt(ch)), character(1))
+  paste(caracteres, collapse = "")
 }
 
 get_lettre <- function(propositions, L) {
@@ -137,7 +161,7 @@ pptx_para <- function(texte, correcte = FALSE, size = 1800, italic = FALSE) {
 
 pptx_first_slide <- function(sujet) {
   titre <- sujet$source$titre %||% sujet$identifiant %||% "Sujet LCA"
-  cat("\n\n## ", titre, "\n\n")
+  cat("\n\n## ", esc_md(titre), "\n\n")
   pptx_raw(pptx_content_shape(pptx_para(reference_article(sujet))))
 }
 

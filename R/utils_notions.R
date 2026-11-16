@@ -4,6 +4,7 @@
 #' version à l'autre) et à proposer la liste des notions ajoutables en Partie 2.
 #' Le `numero` affiché pour une notion déjà présente reste celui du sujet, car
 #' c'est lui qui figure dans les justifications.
+#' @noRd
 load_referentiel_notions <- function(path) {
   if (!file.exists(path)) return(NULL)
   ref <- tryCatch(jsonlite::fromJSON(path, simplifyVector = FALSE), error = function(e) NULL)
@@ -30,6 +31,7 @@ load_referentiel_notions <- function(path) {
 
 #' Choix pour le selectize d'ajout de notion : un groupe par domaine du
 #' référentiel, valeur = `id` de la notion, libellé = « 049 · Facteur de confusion ».
+#' @noRd
 choix_notions_selectize <- function(referentiel) {
   if (is.null(referentiel)) return(list(""))
   n <- referentiel$notions
@@ -52,6 +54,7 @@ notions_vide <- function() {
 #' Rattachements de notions du JSON d'origine, au format long :
 #' une ligne par (question, proposition, notion). Un sujet sans notions
 #' (format antérieur) donne une table vide.
+#' @noRd
 notions_depuis_raw <- function(raw) {
   lignes <- purrr::map_dfr(raw$questions, function(q) {
     purrr::map_dfr(q$propositions, function(p) {
@@ -70,6 +73,7 @@ notions_depuis_raw <- function(raw) {
 #' action : "ajouter" (rôle « évaluée » si la proposition n'en a pas encore,
 #' sinon « associée »), "retirer", ou "basculer" (évaluée <-> associée).
 #' Fonction pure : renvoie la nouvelle table, inchangée si l'action est sans objet.
+#' @noRd
 modifier_notions <- function(notions, question, lettre, action, id, referentiel) {
   est_ici <- notions$question == question & notions$lettre == lettre
   ligne <- which(est_ici & notions$id == id)
@@ -94,12 +98,14 @@ modifier_notions <- function(notions, question, lettre, action, id, referentiel)
 
 #' Numéros à trois chiffres cités entre parenthèses dans une justification
 #' (convention du schéma : « … (036) » ou « … (036, 037) »).
+#' @noRd
 numeros_cites_justification <- function(justification) {
   blocs <- regmatches(justification, gregexpr("\\([0-9]{3}(?:\\s*,\\s*[0-9]{3})*\\)", justification, perl = TRUE))[[1]]
   sort(unique(unlist(regmatches(blocs, gregexpr("[0-9]{3}", blocs)))))
 }
 
 #' Libellé d'une notion à partir de son id (repli : l'id lui-même)
+#' @noRd
 libelle_notion <- function(id, referentiel) {
   if (is.null(referentiel)) return(id)
   lib <- referentiel$notions$libelle[match(id, referentiel$notions$id)]
@@ -107,6 +113,7 @@ libelle_notion <- function(id, referentiel) {
 }
 
 #' Texte lisible des notions d'une proposition, pour le diff de la Partie 3
+#' @noRd
 format_notions <- function(lignes, referentiel) {
   if (nrow(lignes) == 0) return("aucune")
   paste0(lignes$numero, " ", libelle_notion(lignes$id, referentiel),
@@ -115,12 +122,17 @@ format_notions <- function(lignes, referentiel) {
 
 #' Répartition des notions théoriques mobilisées par les propositions d'un sujet
 #'
-#' @param lignes table longue des notions (état arbitré `rv$notions_final`)
-#' @param raw JSON d'origine, pour les effectifs de propositions et les notions ciblées
+#' @param lignes table longue des notions (état arbitré `rv$notions_final`,
+#'   restreint aux questions conservées)
+#' @param raw JSON d'origine, pour les notions ciblées
+#' @param n_propositions nombre de propositions des questions conservées
+#'   (par défaut, celui du JSON d'origine)
 #' @return list(table, n_propositions, n_propositions_avec_notion, version_sujet,
 #'   version_referentiel, referentiel_different)
-compute_notions_repartition <- function(lignes, raw, referentiel = NULL) {
-  n_props <- sum(vapply(raw$questions, function(q) length(q$propositions), integer(1)))
+#' @noRd
+compute_notions_repartition <- function(lignes, raw, referentiel = NULL, n_propositions = NULL) {
+  n_props <- n_propositions %||%
+    sum(vapply(raw$questions, function(q) length(q$propositions), integer(1)))
   n_props_notion <- nrow(unique(lignes[, c("question", "lettre")]))
   ciblees <- vapply(raw$sujet$parametres$notions_ciblees %||% list(), function(n) n$id, character(1))
 
@@ -156,6 +168,7 @@ compute_notions_repartition <- function(lignes, raw, referentiel = NULL) {
 }
 
 #' TRUE si le sujet déclare un référentiel dont le commit diffère de la copie locale
+#' @noRd
 referentiel_different <- function(raw, referentiel) {
   ref_sujet <- raw$sujet$referentiel_notions
   !is.null(referentiel) && !is.null(ref_sujet$commit) && !identical(ref_sujet$commit, referentiel$commit)
@@ -163,6 +176,7 @@ referentiel_different <- function(raw, referentiel) {
 
 #' Histogramme horizontal (HTML/CSS) : une ligne par notion, barre empilée
 #' notion évaluée / notion associée, triée par fréquence décroissante.
+#' @noRd
 render_notions_repartition <- function(rep) {
   tab <- rep$table
   if (nrow(tab) == 0) {
@@ -208,6 +222,7 @@ render_notions_repartition <- function(rep) {
 #' Pastilles des notions d'une proposition (Partie 2) : clic sur le libellé =
 #' basculer évaluée/associée, clic sur × = retirer. Les clics remontent via
 #' `input_id` (valeur « lettre|action|id »).
+#' @noRd
 render_notions_pastilles <- function(lignes, lettre, referentiel, input_id) {
   if (nrow(lignes) == 0) {
     return(htmltools::tags$span(class = "small text-muted", "Aucune notion rattachée."))

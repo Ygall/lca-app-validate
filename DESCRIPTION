@@ -1,0 +1,45 @@
+Package: lcavalidate
+Title: Validation des sujets de lecture critique d'article (LCA)
+Version: 0.2.0
+Authors@R:
+    person("Yves", "Gallien", role = c("aut", "cre"),
+           email = "yves.gallien@gmail.com")
+Description: Application Shiny de validation manuelle des sujets de lecture
+    critique d'article (LCA) produits par le skill 'lca-create', avant
+    diffusion aux étudiants : jeu en aveugle, comparaison au corrigé initial
+    (arbitrage proposition par proposition, ajout et suppression de
+    questions), vue d'ensemble des modifications, exports (JSON, Word,
+    PowerPoint). La session de travail s'exporte dans un fichier et n'est
+    jamais conservée sur le serveur.
+License: MIT + file LICENSE
+URL: https://github.com/Ygall/lca-app-validate
+BugReports: https://github.com/Ygall/lca-app-validate/issues
+Depends:
+    R (>= 4.1.0)
+Imports:
+    bslib (>= 0.9.0),
+    dplyr,
+    htmltools,
+    jsonlite,
+    jsonvalidate,
+    knitr,
+    purrr,
+    quarto,
+    rmarkdown,
+    shiny (>= 1.8.1),
+    stats,
+    tibble,
+    tools,
+    utils,
+    xml2,
+    yaml,
+    zip
+Suggests:
+    pkgload,
+    testthat (>= 3.0.0),
+    withr
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: fr
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

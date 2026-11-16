@@ -2,6 +2,7 @@
 #' serveur) + liste déroulante des notions du référentiel, groupées par domaine.
 #' Un choix dans la liste n'est pas lu comme valeur d'input : il est transmis
 #' en événement (`notion_action` = « lettre|ajouter|id »), puis la liste est vidée.
+#' @noRd
 notions_editeur_ui <- function(ns, L, choix) {
   envoi_ajout <- sprintf(
     "function(value) { var s = this; if (!value) return; Shiny.setInputValue('%s', '%s|ajouter|' + value, {priority: 'event'}); setTimeout(function() { s.clear(true); }, 0); }",
@@ -43,9 +44,26 @@ mod_comparaison_ui <- function(id, referentiel = NULL) {
   ns <- shiny::NS(id)
   lettres <- LETTERS[1:5]
   choix_notions <- choix_notions_selectize(referentiel)
-  mod_question_nav_ui(ns("nav"), main_content = shiny::tagList(
+  # Ajout / suppression de question : dans la barre latérale, sous la grille.
+  actions_questions <- shiny::tagList(
+    shiny::tags$hr(class = "my-2"),
+    shiny::tags$button(
+      type = "button", class = "btn btn-sm btn-outline-primary w-100",
+      onclick = sprintf("Shiny.setInputValue('%s', 'ajouter', {priority: 'event'}); return false;",
+                        ns("action_question")),
+      "+ Ajouter une question"
+    ),
+    shiny::uiOutput(ns("bouton_suppression")),
+    shiny::tags$small(
+      class = "text-muted",
+      "Une question supprimée est exclue des exports et du score d'accord. Les questions conservées sont renumérotées, y compris dans les documents exportés."
+    )
+  )
+  mod_question_nav_ui(ns("nav"), sidebar_extra = actions_questions, main_content = shiny::tagList(
     shiny::uiOutput(ns("avert_referentiel")),
+    shiny::uiOutput(ns("bandeau_question")),
     bslib::card(
+      id = ns("carte_question"),
       bslib::card_body(
         shiny::tags$label("Énoncé de la question", class = "fw-bold", "for" = ns("enonce")),
         shiny::textAreaInput(ns("enonce"), NULL, width = "100%", rows = 2),
@@ -58,23 +76,34 @@ mod_comparaison_ui <- function(id, referentiel = NULL) {
   ))
 }
 
-mod_comparaison_server <- function(id, rv, saves_dir) {
-  shiny::moduleServer(id, function(input, output, session) {    ns <- session$ns
+mod_comparaison_server <- function(id, rv) {
+  shiny::moduleServer(id, function(input, output, session) {
+    ns <- session$ns
     lettres <- LETTERS[1:5]
-    total <- shiny::reactive({ shiny::req(rv$questions_meta); nrow(rv$questions_meta) })
+    # Toutes les questions, y compris supprimées (pour pouvoir les restaurer)
+    # et ajoutées.
+    questions <- shiny::reactive({
+      shiny::req(rv$questions_final)
+      table_questions(rv$questions_final)
+    })
+    question_ajoutee <- function(idx) isTRUE(rv$questions_final$ajoutee[rv$questions_final$numero == idx])
+    question_supprimee <- function(idx) isTRUE(rv$questions_final$supprimee[rv$questions_final$numero == idx])
 
     # Le statut (Initial/Vous/Modifier) se commit immédiatement au clic sur une
     # tuile (cf. observeEvent(input$choix_statut) plus bas) : rv$final en est
     # la seule source de vérité, plus besoin de la resynchroniser ici.
     save_current <- function(idx) {
       shiny::req(rv$final)
+      # Champs pas encore à jour pour cette question (cf. saisie_a_jour() plus
+      # bas) : ils portent encore le contenu de la question quittée.
+      if (!saisie_a_jour()) return(invisible(NULL))
       for (L in lettres) {
         texte <- input[[paste0("texte_", L)]]
         justif <- input[[paste0("justif_", L)]]
-        manuel_val <- isTRUE(input[[paste0("manuel_", L)]])
+        manuel_val <- input[[id_manuel(idx, L)]]
         mask <- rv$final$numero == idx & rv$final$lettre == L
-        if (identical(rv$final$statut_source[mask][1], "manuel")) {
-          rv$final$correcte_final[mask] <- manuel_val
+        if (identical(rv$final$statut_source[mask][1], "manuel") && !is.null(manuel_val)) {
+          rv$final$correcte_final[mask] <- isTRUE(manuel_val)
         }
         rv$final$texte_final[mask] <- texte %||% rv$final$texte_final[mask]
         rv$final$justification_final[mask] <- justif %||% rv$final$justification_final[mask]
@@ -82,7 +111,6 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
       if (!is.null(input$enonce)) {
         rv$questions_final$enonce[rv$questions_final$numero == idx] <- input$enonce
       }
-      persist_session_rds(rv, saves_dir)
     }
 
     etat_modifiee <- function(i) {
@@ -90,7 +118,7 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
       question_modifiee(rv, i)
     }
 
-    nav <- mod_question_nav_server("nav", total, on_navigate = save_current, state_fn = etat_modifiee)
+    nav <- mod_question_nav_server("nav", questions, on_navigate = save_current, state_fn = etat_modifiee)
 
     load_current <- function(idx) {
       shiny::req(rv$final)
@@ -112,35 +140,45 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
     # ordinaire (pas un reactiveVal) : sa lecture ne crée donc pas de
     # dépendance réactive, seule la lecture de nav$current() en crée une.
     derniere_idx_chargee <- NULL
-    # `chargement_recent` protège contre une seconde course, bien plus grave,
-    # confirmée en testant l'app : updateTextAreaInput() est asynchrone
-    # (message envoyé au navigateur, pas de garantie de prise en compte
-    # immédiate côté serveur). Juste après une navigation interne
-    # (Suivant/Précédent), input$texte_A etc. peuvent donc, l'instant
-    # suivant, contenir encore côté serveur le texte de la question
-    # QUITTÉE. Si à ce moment précis l'utilisateur change d'onglet dans la
-    # barre de navigation principale, app.R déclenche un save_now() qui,
-    # sans ce garde-fou, sauvegarderait ce texte périmé sous le numéro de la
-    # NOUVELLE question — reproduisant exactement le bug observé
-    # (« la question 2 a été remplacée par la question 3 »). Le save de la
-    # question quittée a de toute façon déjà été fait, de façon fiable, par
-    # goto()/save_current() juste avant ce chargement : il n'y a donc rien à
-    # perdre à ignorer un save_now() tant que le navigateur n'a pas confirmé
-    # avoir rattrapé son retard (passage à FALSE dès le premier écho reçu
-    # sur l'un des champs).
-    chargement_recent <- FALSE
-    lapply(c(paste0("texte_", lettres), paste0("justif_", lettres), "enonce"), function(fid) {
-      shiny::observeEvent(input[[fid]], { chargement_recent <<- FALSE }, ignoreInit = TRUE)
-    })
+    #
+    # Seconde course, bien plus grave, confirmée en testant l'app :
+    # updateTextAreaInput() est asynchrone (message envoyé au navigateur).
+    # Juste après un changement de question, input$texte_A etc. contiennent
+    # encore, côté serveur, le texte de la question QUITTÉE. Un enregistrement
+    # qui survient à ce moment (deux clics rapprochés sur « Suivant »,
+    # changement d'onglet immédiat) rangerait ce texte sous le numéro de la
+    # NOUVELLE question (« la question 2 a été remplacée par la question 3 »).
+    # La fenêtre est de quelques millisecondes en local, mais d'un aller-retour
+    # réseau complet sur un serveur distant.
+    #
+    # D'où un accusé de réception : chaque chargement porte un numéro, que le
+    # navigateur renvoie (input$charge_ack) une fois les champs mis à jour —
+    # il traite le message « lca-accuse » après les mises à jour d'inputs de
+    # la même réponse du serveur, et renvoie leurs valeurs avec l'accusé.
+    # Tant que l'accusé du DERNIER chargement n'est pas revenu, les champs ne
+    # sont pas ceux de la question affichée et save_current() ne fait rien.
+    # Rien n'est perdu : la question quittée a été enregistrée par la
+    # navigation elle-même, et l'utilisateur n'a encore rien pu saisir dans
+    # la nouvelle. (Un premier garde-fou, levé au premier écho d'un champ,
+    # ne suffisait pas : l'écho d'un chargement antérieur le levait à tort.)
+    charge_id <- 0L
+    saisie_a_jour <- function() isTRUE(shiny::isolate(input$charge_ack) == charge_id)
     shiny::observe({
       shiny::req(rv$imported)
       idx <- nav$current()
       if (!identical(derniere_idx_chargee, idx)) {
         load_current(idx)
         derniere_idx_chargee <<- idx
-        chargement_recent <<- TRUE
+        charge_id <<- charge_id + 1L
+        session$sendCustomMessage("lca-accuse", list(id = ns("charge_ack"), valeur = charge_id))
       }
     })
+
+    # Les cases « Correcte » sont reconstruites (renderUI) à chaque question :
+    # leur identifiant porte le numéro de la question (`manuel_3_A`), pour
+    # qu'elles ne puissent être lues que pour elle (même principe que les
+    # cases du jeu en aveugle).
+    id_manuel <- function(idx, L) paste("manuel", idx, L, sep = "_")
 
     # Tuiles "Initial / Vous / Modifier" façon sélecteur de question : commit
     # immédiat dans rv$final, pas d'attente de la navigation. On sauvegarde
@@ -150,20 +188,25 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
     # écriture dans rv$final écrasait les modifications non enregistrées des
     # *autres* propositions avec leur dernière valeur persistée.
     shiny::observeEvent(input$choix_statut, {
-      parts <- strsplit(input$choix_statut, "\\|")[[1]]
+      parts <- strsplit(input$choix_statut, "|", fixed = TRUE)[[1]]
       L <- parts[1]
       valeur <- parts[2]
       idx <- nav$current()
+      # Clic sur une tuile affichée pour une autre question (réaffichage en
+      # cours) : ignoré plutôt qu'appliqué à la mauvaise question.
+      shiny::req(length(parts) == 3, L %in% lettres, valeur %in% c("ia", "humain", "manuel"),
+                 identical(parts[3], as.character(idx)))
       save_current(idx)
+      mask <- rv$final$numero == idx & rv$final$lettre == L
       correcte_final <- switch(valeur,
         ia = isTRUE(rv$propositions_json$correcte[rv$propositions_json$numero == idx & rv$propositions_json$lettre == L]),
         humain = isTRUE(rv$human_answers$coche_humain[rv$human_answers$numero == idx & rv$human_answers$lettre == L]),
-        manuel = isTRUE(input[[paste0("manuel_", L)]])
+        # « Modifier » part de la réponse actuellement retenue ; la case
+        # « Correcte » qui apparaît alors permet de la changer.
+        manuel = isTRUE(rv$final$correcte_final[mask][1])
       )
-      mask <- rv$final$numero == idx & rv$final$lettre == L
       rv$final$statut_source[mask] <- valeur
       rv$final$correcte_final[mask] <- correcte_final
-      persist_session_rds(rv, saves_dir)
     })
 
     # Notions théoriques : ajout / retrait / bascule évaluée↔associée, appliqués
@@ -175,7 +218,98 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
       rv$notions_final <- modifier_notions(
         rv$notions_final, nav$current(), parts[1], parts[2], parts[3], rv$referentiel
       )
-      persist_session_rds(rv, saves_dir)
+    })
+
+    # ---- Ajout / suppression / restauration d'une question ----
+    #
+    # Toujours save_current() d'abord : les champs affichés et pas encore
+    # enregistrés (cf. choix_statut ci-dessus) appartiennent à la question en
+    # cours, quelle que soit l'action demandée.
+    shiny::observeEvent(input$action_question, {
+      idx <- nav$current()
+      action <- input$action_question
+      if (identical(action, "ajouter")) {
+        shiny::showModal(shiny::modalDialog(
+          title = "Ajouter une question",
+          shiny::radioButtons(
+            ns("ajout_position"), "Position",
+            choices = c("Après la question affichée" = "apres", "À la fin du sujet" = "fin")
+          ),
+          shiny::selectInput(
+            ns("ajout_section"), "Section de l'article",
+            choices = stats::setNames(names(SECTIONS_ARTICLE), SECTIONS_ARTICLE), selected = "transversal"
+          ),
+          shiny::numericInput(
+            ns("ajout_difficulte"), "Difficulté (1 à 10)", min = 1, max = 10, step = 1,
+            value = rv$sujet_meta$parametres$difficulte_cible %||% 5
+          ),
+          shiny::textInput(ns("ajout_notion"), "Notion évaluée (texte libre)", width = "100%"),
+          shiny::p(class = "small text-muted mb-0",
+                   "L'énoncé, les cinq propositions et leurs justifications se rédigent ensuite directement dans la question créée."),
+          footer = shiny::tagList(
+            shiny::modalButton("Annuler"),
+            shiny::actionButton(ns("ajout_confirmer"), "Ajouter", class = "btn-primary")
+          )
+        ))
+      } else if (action %in% c("supprimer", "restaurer")) {
+        save_current(idx)
+        rv$questions_final <- marquer_suppression(rv$questions_final, idx, identical(action, "supprimer"))
+      }
+    })
+
+    shiny::observeEvent(input$ajout_confirmer, {
+      idx <- nav$current()
+      save_current(idx)
+      res <- ajouter_question(
+        rv$questions_final, rv$final,
+        apres = if (identical(input$ajout_position, "apres")) idx,
+        notion = input$ajout_notion, difficulte = input$ajout_difficulte,
+        section_article = input$ajout_section
+      )
+      rv$questions_final <- res$questions_final
+      rv$final <- res$final
+      shiny::removeModal()
+      nav$goto(res$numero)
+    })
+
+    output$bouton_suppression <- shiny::renderUI({
+      shiny::req(rv$imported)
+      supprimee <- question_supprimee(nav$current())
+      shiny::tags$button(
+        type = "button",
+        class = paste("btn btn-sm w-100 mt-2 mb-2", if (supprimee) "btn-outline-success" else "btn-outline-danger"),
+        onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'}); return false;",
+                          ns("action_question"), if (supprimee) "restaurer" else "supprimer"),
+        if (supprimee) "Restaurer la question" else "Supprimer la question"
+      )
+    })
+
+    output$bandeau_question <- shiny::renderUI({
+      shiny::req(rv$imported)
+      idx <- nav$current()
+      q <- rv$questions_final[rv$questions_final$numero == idx, , drop = FALSE]
+      shiny::tagList(
+        if (isTRUE(q$supprimee[1])) {
+          shiny::tagList(
+            # La question reste consultable et modifiable, mais visiblement hors sujet.
+            shiny::tags$style(shiny::HTML(sprintf("#%s { opacity: 0.5; }", ns("carte_question")))),
+            shiny::div(
+              class = "alert alert-danger py-2",
+              shiny::strong("Question supprimée. "),
+              "Elle ne figure plus dans les exports ni dans le score d'accord. Le bouton « Restaurer la question » de la barre latérale la rétablit telle quelle."
+            )
+          )
+        },
+        if (isTRUE(q$ajoutee[1])) {
+          shiny::div(
+            class = "alert alert-info py-2",
+            shiny::strong("Question ajoutée. "),
+            sprintf("Section : %s — difficulté : %s%s. Rédigez l'énoncé et les cinq propositions, puis cochez « Correcte » sous chaque proposition exacte.",
+                    SECTIONS_ARTICLE[q$section_article[1]], q$difficulte[1],
+                    if (isTRUE(nzchar(q$notion[1]))) paste0(" — notion : ", q$notion[1]) else "")
+          )
+        }
+      )
     })
 
     output$avert_referentiel <- shiny::renderUI({
@@ -214,6 +348,8 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
       output[[paste0("badges_", L)]] <- shiny::renderUI({
         shiny::req(rv$imported)
         idx <- nav$current()
+        # Question ajoutée : ni version initiale ni réponse en aveugle à rappeler.
+        if (question_ajoutee(idx)) return(NULL)
         j <- rv$propositions_json[rv$propositions_json$numero == idx & rv$propositions_json$lettre == L, ]
         h <- rv$human_answers[rv$human_answers$numero == idx & rv$human_answers$lettre == L, ]
         shiny::tagList(
@@ -227,6 +363,8 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
       output[[paste0("statut_tiles_", L)]] <- shiny::renderUI({
         shiny::req(rv$imported, rv$final)
         idx <- nav$current()
+        # Question ajoutée : statut toujours « manuel » (case « Correcte » seule).
+        if (question_ajoutee(idx)) return(NULL)
         actuel <- rv$final$statut_source[rv$final$numero == idx & rv$final$lettre == L]
         choix <- c(ia = "Initial", humain = "Vous", manuel = "Modifier")
         shiny::div(
@@ -235,8 +373,8 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
             classe <- paste("btn btn-sm", if (identical(actuel, v)) "btn-primary" else "btn-outline-dark")
             shiny::tags$a(
               href = "#", class = classe,
-              onclick = sprintf("Shiny.setInputValue('%s', '%s|%s', {priority: 'event'}); return false;",
-                                 ns("choix_statut"), L, v),
+              onclick = sprintf("Shiny.setInputValue('%s', '%s|%s|%s', {priority: 'event'}); return false;",
+                                 ns("choix_statut"), L, v, idx),
               choix[[v]]
             )
           })
@@ -248,7 +386,7 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
         idx <- nav$current()
         mask <- rv$final$numero == idx & rv$final$lettre == L
         if (identical(rv$final$statut_source[mask][1], "manuel")) {
-          shiny::checkboxInput(session$ns(paste0("manuel_", L)), "Correcte",
+          shiny::checkboxInput(session$ns(id_manuel(idx, L)), "Correcte",
                                 value = isTRUE(rv$final$correcte_final[mask][1]))
         }
       })
@@ -279,9 +417,6 @@ mod_comparaison_server <- function(id, rv, saves_dir) {
       })
     })
 
-    list(save_now = function() {
-      if (chargement_recent) return(invisible(NULL))
-      save_current(shiny::isolate(nav$current()))
-    })
+    list(save_now = function() save_current(shiny::isolate(nav$current())))
   })
 }

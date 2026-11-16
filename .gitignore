@@ -13,3 +13,9 @@ ressources/UNESS Studio_files/
 
 # Artefacts macOS d'archives
 __MACOSX/
+
+# Anciennes sauvegardes locales et fichiers de session convertis
+saves/
+
+# Déploiement : identifiants et état local de rsconnect
+rsconnect/

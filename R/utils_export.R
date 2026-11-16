@@ -1,10 +1,12 @@
 #' Rend un template Quarto (docx ou pptx) à partir de l'état consolidé de rv
 #'
+#' `template` est le nom d'un gabarit du dossier `quarto/` du package.
 #' Écrit le JSON consolidé et une copie du template dans un dossier temporaire
 #' dédié, appelle quarto::quarto_render() avec des chemins absolus, puis
 #' retourne le chemin du fichier produit (copié hors du dossier temporaire
 #' avant que celui-ci ne soit nettoyé).
-render_export <- function(rv, vision, template_relpath, output_format, app_dir) {
+#' @noRd
+render_export <- function(rv, vision, template, output_format) {
   tmp_dir <- tempfile("lca_export_")
   dir.create(tmp_dir)
   on.exit(unlink(tmp_dir, recursive = TRUE), add = TRUE)
@@ -13,15 +15,11 @@ render_export <- function(rv, vision, template_relpath, output_format, app_dir) 
   tmp_json <- file.path(tmp_dir, "export.json")
   jsonlite::write_json(consolidated, tmp_json, auto_unbox = TRUE, pretty = TRUE, na = "null")
 
-  src_qmd <- file.path(app_dir, template_relpath)
-  if (!file.exists(src_qmd)) stop("Template Quarto introuvable : ", src_qmd)
-  tmp_qmd <- file.path(tmp_dir, basename(template_relpath))
-  file.copy(src_qmd, tmp_qmd, overwrite = TRUE)
+  tmp_qmd <- file.path(tmp_dir, template)
+  file.copy(chemin_app("quarto", template), tmp_qmd, overwrite = TRUE)
+  file.copy(chemin_app("quarto", "_export_helpers.R"), file.path(tmp_dir, "_export_helpers.R"), overwrite = TRUE)
 
-  src_helpers <- file.path(app_dir, "quarto", "_export_helpers.R")
-  file.copy(src_helpers, file.path(tmp_dir, "_export_helpers.R"), overwrite = TRUE)
-
-  out_file <- paste0(tools::file_path_sans_ext(basename(template_relpath)), ".", output_format)
+  out_file <- paste0(tools::file_path_sans_ext(template), ".", output_format)
 
   quarto::quarto_render(
     input = normalizePath(tmp_qmd),
@@ -51,6 +49,7 @@ render_export <- function(rv, vision, template_relpath, output_format, app_dir) 
 #' taille de police ou sa position depuis le markdown. On corrige donc après
 #' coup, en éditant directement le XML de chaque diapo (le contenu, lui, est
 #' entièrement maîtrisé en amont via pptx_content_shape()).
+#' @noRd
 adjust_pptx_title_placeholder <- function(pptx_path, title_y = 350000, title_h = 650000, title_sz = 2000) {
   ns <- c(
     p = "http://schemas.openxmlformats.org/presentationml/2006/main",
@@ -85,9 +84,7 @@ adjust_pptx_title_placeholder <- function(pptx_path, title_y = 350000, title_h =
   # que PowerPoint juge corrompu ("réparer" puis rien à afficher).
   files <- list.files(edit_dir, recursive = TRUE, full.names = FALSE, all.files = TRUE)
   files <- files[!files %in% c(".", "..")]
-  old_wd <- setwd(edit_dir)
-  zip::zip(pptx_path, files)
-  setwd(old_wd)
+  zip::zip(normalizePath(pptx_path), files, root = edit_dir)
 
   invisible(pptx_path)
 }

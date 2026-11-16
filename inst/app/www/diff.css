@@ -209,3 +209,12 @@
 .flag-checkbox-wrap .checkbox label {
   padding-left: 0;
 }
+
+/* Tuile d'une question supprimée (Comparaison, Vue d'ensemble) : toujours
+   cliquable, pour la consulter ou la restaurer. */
+.question-grid .btn.question-supprimee {
+  color: #a6402e;
+  border: 1px dashed #d9a79d;
+  background-color: #fceeea;
+  opacity: 0.75;
+}

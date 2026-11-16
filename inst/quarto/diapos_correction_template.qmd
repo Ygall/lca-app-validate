@@ -15,10 +15,10 @@ sujet <- jsonlite::fromJSON(params$export_json, simplifyVector = FALSE)
 pptx_first_slide(sujet$sujet)
 
 for (q in sujet$questions) {
-  cat("\n\n## ", q$enonce, "\n\n")
+  cat("\n\n## ", esc_md(q$enonce), "\n\n")
   pptx_question_slide(q$propositions, corrige = FALSE)
 
-  cat("\n\n## ", q$enonce, "\n\n")
+  cat("\n\n## ", esc_md(q$enonce), "\n\n")
   pptx_question_slide(q$propositions, corrige = TRUE)
 }
 ```
